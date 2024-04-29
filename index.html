@@ -84,9 +84,7 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="decentralized-stochastic-gradient-langevin-diffusion">Decentralized Stochastic Gradient Langevin Diffusion</h1>
-<h2 id="package-details">Package Details</h2>
-<p>This package implements the the Decentralized Stochastic Gradient Langevin
-Diffusion Algorithm for both the Vanila and EXTRA methods. <code>DeSGLD</code> is the class
+<p>This package implements the Decentralized Stochastic Gradient Langevin Diffusion Algorithm for both the Vanila and EXTRA methods. <code>DeSGLD</code> is the class
 that implements the algorithm.</p>
 
 
@@ -170,10 +168,10 @@ that implements the algorithm.</p>
             </li>
             <li>
               <b><code>T</code></b>
-                  (<code>float</code>)
+                  (<code>int</code>)
               –
               <div class="doc-md-description">
-                <p>the iteration number</p>
+                <p>the iteration numbers</p>
               </div>
             </li>
             <li>
@@ -258,21 +256,15 @@ that implements the algorithm.</p>
     <td class="field-body">
       <ul class="first simple">
           <li>
-<b><code>history_all</code></b>            –
+            –
             <div class="doc-md-description">
-              <p>contains the approximation from all the nodes</p>
-            </div>
-          </li>
-          <li>
-<b><code>beta_mean_all</code></b>            –
-            <div class="doc-md-description">
-              <p>contains the mean of the approximation from</p>
+              <p>vanila_desgld()</p>
             </div>
           </li>
           <li>
             –
             <div class="doc-md-description">
-              <p>all the nodes</p>
+              <p>extra_desgld()</p>
             </div>
           </li>
       </ul>
@@ -290,7 +282,7 @@ that implements the algorithm.</p>
         N (int): the size of the array in each it
         sigma (float): the variation of the noise
         eta (float): the learning rate
-        T (float): the iteration number
+        T (int): the iteration numbers
         dim (int): the dimension of the input data
         b (int): the batch size
         lam (float): the regularization parameter
@@ -301,9 +293,8 @@ that implements the algorithm.</p>
         reg_type (str): the type of regressor used
 
     Returns:
-        history_all: contains the approximation from all the nodes
-        beta_mean_all: contains the mean of the approximation from
-        all the nodes
+        vanila_desgld()
+        extra_desgld()
     """
 
     def __init__(
@@ -366,9 +357,6 @@ that implements the algorithm.</p>
 
     def vanila_desgld(self):
         """Vanila DeSGLD algorithm
-
-        Args:
-            params: the same parameters from the class
 
         Returns:
             history_all: contains the approximation from all the nodes
@@ -450,9 +438,6 @@ that implements the algorithm.</p>
 
     def extra_desgld(self):
         """EXTRA DeSGLD algorithm
-
-        Args:
-            params: the same parameters from the class
 
         Returns:
             history_all: contains the approximation from all the nodes
@@ -617,30 +602,6 @@ that implements the algorithm.</p>
   </colgroup>
   <tbody valign="top">
     <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>params</code></b>
-              –
-              <div class="doc-md-description">
-                <p>the same parameters from the class</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
     <th class="field-name">Returns:</th>
     <td class="field-body">
       <ul class="first simple">
@@ -671,9 +632,6 @@ that implements the algorithm.</p>
             <summary>Source code in <code>src/desgld/desgld_alg.py</code></summary>
             <pre class="codehilite"><code class="language-python">def extra_desgld(self):
     """EXTRA DeSGLD algorithm
-
-    Args:
-        params: the same parameters from the class
 
     Returns:
         history_all: contains the approximation from all the nodes
@@ -1032,30 +990,6 @@ that implements the algorithm.</p>
   </colgroup>
   <tbody valign="top">
     <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>params</code></b>
-              –
-              <div class="doc-md-description">
-                <p>the same parameters from the class</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
     <th class="field-name">Returns:</th>
     <td class="field-body">
       <ul class="first simple">
@@ -1086,9 +1020,6 @@ that implements the algorithm.</p>
             <summary>Source code in <code>src/desgld/desgld_alg.py</code></summary>
             <pre class="codehilite"><code class="language-python">def vanila_desgld(self):
     """Vanila DeSGLD algorithm
-
-    Args:
-        params: the same parameters from the class
 
     Returns:
         history_all: contains the approximation from all the nodes
@@ -1232,5 +1163,5 @@ that implements the algorithm.</p>
 
 <!--
 MkDocs version : 1.6.0
-Build Date UTC : 2024-04-29 20:33:23.701311+00:00
+Build Date UTC : 2024-04-29 21:42:32.918745+00:00
 -->
