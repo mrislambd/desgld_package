@@ -12,7 +12,7 @@ class DeSGLD:
     """
 
     def __init__(
-        self, size_w, N, sigma, eta, dim, b, lam, x, y, w, hv, reg_type
+        self, size_w, N, sigma, eta, T, dim, b, lam, x, y, w, hv, reg_type
     ):
         """
         :param size_w: scaler, int: the size of the network
@@ -27,6 +27,7 @@ class DeSGLD:
         :param w: 2D array, float: the weight matrix from the network structure
         :param hv: 1D array, float: tuning parameter for the extra algorithm
         :param reg_type: the type of regularization
+        :param T: scaler, int: the number of iterations
         """
         self.size_w = size_w
         self.N = N
