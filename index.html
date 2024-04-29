@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>desgld0.1.0</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Decentralized Stochastic Gradient Langevin Diffusion";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="." class="icon icon-home"> desgld0.1.0
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="desgld/">DeSGLD</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="net/">Network Structure</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="evaluation/">Evaluation</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="use/">Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="about/">Package</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">desgld0.1.0</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Decentralized Stochastic Gradient Langevin Diffusion</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="decentralized-stochastic-gradient-langevin-diffusion">Decentralized Stochastic Gradient Langevin Diffusion</h1>
+<h2 id="package-details">Package Details</h2>
+<pre class="codehilite"><code>name = desgld,
+version = 0.1.0
+url = https://github.com/mrislambd/desgld_package.git
+author = Rafiq Islam
+</code></pre>
+
+<p>This package implements the the Decentralized Stochastic Gradient Langevin
+Diffusion Algorithm for both the Vanila and EXTRA methods. <code>DeSGLD</code> is the class
+that implements the algorithm.</p>
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.desgld.desgld_alg"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="src.desgld.desgld_alg.DeSGLD" class="doc doc-heading">
+          <code>DeSGLD</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Decentralized Stochastic Gradient Langevin Dynamics</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>size_w</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the size of the network</p>
+              </div>
+            </li>
+            <li>
+              <b><code>N</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the size of the array in each it</p>
+              </div>
+            </li>
+            <li>
+              <b><code>sigma</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the variation of the noise</p>
+              </div>
+            </li>
+            <li>
+              <b><code>eta</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the learning rate</p>
+              </div>
+            </li>
+            <li>
+              <b><code>T</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the iteration number</p>
+              </div>
+            </li>
+            <li>
+              <b><code>dim</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the dimension of the input data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>b</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the batch size</p>
+              </div>
+            </li>
+            <li>
+              <b><code>lam</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the regularization parameter</p>
+              </div>
+            </li>
+            <li>
+              <b><code>x</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the input data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>y</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the output data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>w</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the weight matrix from the network structure</p>
+              </div>
+            </li>
+            <li>
+              <b><code>hv</code></b>
+                  (<code>float</code>)
+              –
+              <div class="doc-md-description">
+                <p>the tuning parameter for the extra algorithm</p>
+              </div>
+            </li>
+            <li>
+              <b><code>reg_type</code></b>
+                  (<code>str</code>)
+              –
+              <div class="doc-md-description">
+                <p>the type of regressor used</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>history_all</code></b>            –
+            <div class="doc-md-description">
+              <p>contains the approximation from all the nodes</p>
+            </div>
+          </li>
+          <li>
+<b><code>beta_mean_all</code></b>            –
+            <div class="doc-md-description">
+              <p>contains the mean of the approximation from</p>
+            </div>
+          </li>
+          <li>
+            –
+            <div class="doc-md-description">
+              <p>all the nodes</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>src/desgld/desgld_alg.py</code></summary>
+              <pre class="codehilite"><code class="language-python">class DeSGLD:
+    """Decentralized Stochastic Gradient Langevin Dynamics
+
+    Args:
+        size_w (int): the size of the network
+        N (int): the size of the array in each it
+        sigma (float): the variation of the noise
+        eta (float): the learning rate
+        T (float): the iteration number
+        dim (int): the dimension of the input data
+        b (int): the batch size
+        lam (float): the regularization parameter
+        x (float): the input data
+        y (float): the output data
+        w (float): the weight matrix from the network structure
+        hv (float): the tuning parameter for the extra algorithm
+        reg_type (str): the type of regressor used
+
+    Returns:
+        history_all: contains the approximation from all the nodes
+        beta_mean_all: contains the mean of the approximation from
+        all the nodes
+    """
+
+    def __init__(
+        self, size_w, N, sigma, eta, T, dim, b, lam, x, y, w, hv, reg_type
+    ):
+        self.size_w = size_w
+        self.N = N
+        self.sigma = sigma
+        self.eta = eta
+        self.dim = dim
+        self.b = b
+        self.lam = lam
+        self.x = x
+        self.y = y
+        self.w = w
+        self.hv = hv
+        self.T = T
+        self.reg_type = reg_type
+
+    def gradient_logreg(self, beta, x, y, dim, lam, b):
+        """Gradient function for the logistic regression
+
+        Args:
+            beta: approximation at each node
+            x: the input data
+            y: the output data
+            dim: the dimension of the input data
+            lam: the regularization parameter
+            b: the batch size
+        Returns:
+            gradient for the the logistic regression
+        """
+        f = np.zeros(dim)
+        randomList = np.random.randint(0, len(y) - 1, size=int(b))
+        for item in randomList:
+            h = 1 / (1 + np.exp(-np.dot(beta, x[item])))
+            f -= np.dot((y[item] - h), x[item])
+        f += (2 / lam) * beta
+        return f
+
+    def gradient_linreg(self, beta, x, y, dim, lam, b):
+        """Gradient function for the linear regression
+
+        Args:
+            beta: approximation at each node
+            x: the input data
+            y: the output data
+            dim: the dimension of the input data
+            lam: the regularization parameter
+            b: the batch size
+        Returns:
+            gradient for the the logistic regression
+        """
+        f = np.zeros(dim)
+        randomList = np.random.randint(0, len(y) - 1, size=int(b))
+        for i in randomList:
+            f = f - np.dot((y[i] - np.dot(beta, x[i])), x[i])
+        f += (2 / lam) * beta
+        return f
+
+    def vanila_desgld(self):
+        """Vanila DeSGLD algorithm
+
+        Args:
+            params: the same parameters from the class
+
+        Returns:
+            history_all: contains the approximation from all the nodes
+            beta_mean_all: contains the mean of the approximation from
+            all the nodes
+        """
+        # Initialization
+        if self.reg_type == "logistic":
+            beta = np.random.normal(
+                0, self.sigma, size=(self.N, self.size_w, self.dim)
+            )
+        else:
+            beta = np.random.multivariate_normal(
+                mean=np.zeros(self.dim),
+                cov=np.eye(self.dim),
+                size=(self.N, self.size_w),
+            )
+        history_all = []
+        beta_mean_all = []
+        for t in range(1):
+            history = np.empty((self.size_w, self.dim, self.N))
+            beta_mean = np.empty((self.dim, self.N))
+            for i in range(self.N):
+                history[:, :, i] = beta[i, :, :]
+            for j in range(self.dim):
+                beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+            history_all.append(history)
+            beta_mean_all.append(beta_mean)
+
+        # Update
+        step = self.eta
+        for t in range(self.T):
+            for n in range(self.N):
+                for i in range(self.size_w):
+                    if self.reg_type == "logistic":
+                        g = self.gradient_logreg(
+                            beta[n, i],
+                            self.x[i],
+                            self.y[i],
+                            self.dim,
+                            self.lam,
+                            self.b,
+                        )
+                        temp = np.zeros(self.dim)
+                        for j in range(len(beta[n])):
+                            temp = temp + self.w[i, j] * beta[n, j]
+                        noise = np.random.normal(0, self.sigma, self.dim)
+                        beta[n, i] = (
+                            temp - step * g + math.sqrt(2 * step) * noise
+                        )
+                    else:
+                        g = self.gradient_linreg(
+                            beta[n, i],
+                            self.x[i],
+                            self.y[i],
+                            self.dim,
+                            self.lam,
+                            self.b,
+                        )
+                        temp = np.zeros(self.dim)
+                        for j in range(len(beta[n])):
+                            temp = temp + self.w[i, j] * beta[n, j]
+                        noise = np.random.multivariate_normal(
+                            mean=np.zeros(self.dim), cov=np.eye(self.dim)
+                        )
+                        beta[n, i] = (
+                            temp - step * g + math.sqrt(2 * step) * noise
+                        )
+
+            history = np.empty((self.size_w, self.dim, self.N))
+            beta_mean = np.empty((self.dim, self.N))
+            for i in range(self.N):
+                history[:, :, i] = beta[i, :, :]
+            for j in range(self.dim):
+                beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+            history_all.append(history)
+            beta_mean_all.append(beta_mean)
+        return np.array(history_all), np.array(beta_mean_all)
+
+    def extra_desgld(self):
+        """EXTRA DeSGLD algorithm
+
+        Args:
+            params: the same parameters from the class
+
+        Returns:
+            history_all: contains the approximation from all the nodes
+            beta_mean_all: contains the mean of the approximation from
+            all the nodes
+        """
+        # I_n is the identity matrix of the same size as the weight matrix
+        I_n = np.eye(self.size_w)
+        h_values = self.hv
+
+        history_all = []
+        beta_mean_all = []
+        for h in h_values:
+            # w1 is the weight matrix with the hyperparameter h
+            w1 = h * I_n + (1 - h) * self.w
+
+            # Initialization
+            if self.reg_type == "logistic":
+                beta = np.random.normal(
+                    0, self.sigma, size=(self.N, self.size_w, self.dim)
+                )
+            else:
+                beta = np.random.multivariate_normal(
+                    mean=np.zeros(self.dim),
+                    cov=np.eye(self.dim),
+                    size=(self.N, self.size_w),
+                )
+            history_all_h = []
+            beta_mean_all_h = []
+            for t in range(1):
+                history = np.empty((self.size_w, self.dim, self.N))
+                beta_mean = np.empty((self.dim, self.N))
+                for i in range(self.N):
+                    history[:, :, i] = beta[i, :, :]
+                for j in range(self.dim):
+                    beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+                history_all_h.append(history)
+                beta_mean_all_h.append(beta_mean)
+
+            # Update
+            step = self.eta
+            for t in range(self.T):
+                for n in range(self.N):
+                    for i in range(self.size_w):
+                        if self.reg_type == "logistic":
+                            # Vanila Part
+                            g = self.gradient_logreg(
+                                beta[n, i],
+                                self.x[i],
+                                self.y[i],
+                                self.dim,
+                                self.lam,
+                                self.b,
+                            )
+                            temp = np.zeros(self.dim)
+                            for j in range(len(beta[n])):
+                                temp = temp + w1[i, j] * beta[n, j]
+                            noise = np.random.normal(0, self.sigma, self.dim)
+                            beta[n, i] = (
+                                temp - step * g + math.sqrt(2 * step) * noise
+                            )
+                            # Extra Part
+                            g = self.gradient_logreg(
+                                beta[n, i],
+                                self.x[i],
+                                self.y[i],
+                                self.dim,
+                                self.lam,
+                                self.b,
+                            )
+                            temp = np.zeros(self.dim)
+                            for j in range(len(beta[n])):
+                                temp = temp + self.w[i, j] * beta[n, j]
+                            noise = np.random.normal(0, self.sigma, self.dim)
+                            beta[n, i] = (
+                                temp - step * g + math.sqrt(2 * step) * noise
+                            )
+                        else:
+                            # Vanila Part
+                            g = self.gradient_linreg(
+                                beta[n, i],
+                                self.x[i],
+                                self.y[i],
+                                self.dim,
+                                self.lam,
+                                self.b,
+                            )
+                            temp = np.zeros(self.dim)
+                            for j in range(len(beta[n])):
+                                temp = temp + w1[i, j] * beta[n, j]
+                            noise = np.random.multivariate_normal(
+                                mean=np.zeros(self.dim), cov=np.eye(self.dim)
+                            )
+                            beta[n, i] = (
+                                temp - step * g + math.sqrt(2 * step) * noise
+                            )
+                            # Extra Part
+                            g = self.gradient_linreg(
+                                beta[n, i],
+                                self.x[i],
+                                self.y[i],
+                                self.dim,
+                                self.lam,
+                                self.b,
+                            )
+                            temp = np.zeros(self.dim)
+                            for j in range(len(beta[n])):
+                                temp = temp + self.w[i, j] * beta[n, j]
+                            noise = np.random.multivariate_normal(
+                                mean=np.zeros(self.dim), cov=np.eye(self.dim)
+                            )
+                            beta[n, i] = (
+                                temp - step * g + math.sqrt(2 * step) * noise
+                            )
+
+                history = np.empty((self.size_w, self.dim, self.N))
+                beta_mean = np.empty((self.dim, self.N))
+                for i in range(self.N):
+                    history[:, :, i] = beta[i, :, :]
+                for j in range(self.dim):
+                    beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+                history_all_h.append(history)
+                beta_mean_all_h.append(beta_mean)
+            history_all.append(history_all_h)
+            beta_mean_all.append(beta_mean_all_h)
+        return np.array(history_all), np.array(beta_mean_all)</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.desgld.desgld_alg.DeSGLD.extra_desgld" class="doc doc-heading">
+          <code class=" language-python">extra_desgld()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>EXTRA DeSGLD algorithm</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>params</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the same parameters from the class</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>history_all</code></b>            –
+            <div class="doc-md-description">
+              <p>contains the approximation from all the nodes</p>
+            </div>
+          </li>
+          <li>
+<b><code>beta_mean_all</code></b>            –
+            <div class="doc-md-description">
+              <p>contains the mean of the approximation from</p>
+            </div>
+          </li>
+          <li>
+            –
+            <div class="doc-md-description">
+              <p>all the nodes</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>src/desgld/desgld_alg.py</code></summary>
+            <pre class="codehilite"><code class="language-python">def extra_desgld(self):
+    """EXTRA DeSGLD algorithm
+
+    Args:
+        params: the same parameters from the class
+
+    Returns:
+        history_all: contains the approximation from all the nodes
+        beta_mean_all: contains the mean of the approximation from
+        all the nodes
+    """
+    # I_n is the identity matrix of the same size as the weight matrix
+    I_n = np.eye(self.size_w)
+    h_values = self.hv
+
+    history_all = []
+    beta_mean_all = []
+    for h in h_values:
+        # w1 is the weight matrix with the hyperparameter h
+        w1 = h * I_n + (1 - h) * self.w
+
+        # Initialization
+        if self.reg_type == "logistic":
+            beta = np.random.normal(
+                0, self.sigma, size=(self.N, self.size_w, self.dim)
+            )
+        else:
+            beta = np.random.multivariate_normal(
+                mean=np.zeros(self.dim),
+                cov=np.eye(self.dim),
+                size=(self.N, self.size_w),
+            )
+        history_all_h = []
+        beta_mean_all_h = []
+        for t in range(1):
+            history = np.empty((self.size_w, self.dim, self.N))
+            beta_mean = np.empty((self.dim, self.N))
+            for i in range(self.N):
+                history[:, :, i] = beta[i, :, :]
+            for j in range(self.dim):
+                beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+            history_all_h.append(history)
+            beta_mean_all_h.append(beta_mean)
+
+        # Update
+        step = self.eta
+        for t in range(self.T):
+            for n in range(self.N):
+                for i in range(self.size_w):
+                    if self.reg_type == "logistic":
+                        # Vanila Part
+                        g = self.gradient_logreg(
+                            beta[n, i],
+                            self.x[i],
+                            self.y[i],
+                            self.dim,
+                            self.lam,
+                            self.b,
+                        )
+                        temp = np.zeros(self.dim)
+                        for j in range(len(beta[n])):
+                            temp = temp + w1[i, j] * beta[n, j]
+                        noise = np.random.normal(0, self.sigma, self.dim)
+                        beta[n, i] = (
+                            temp - step * g + math.sqrt(2 * step) * noise
+                        )
+                        # Extra Part
+                        g = self.gradient_logreg(
+                            beta[n, i],
+                            self.x[i],
+                            self.y[i],
+                            self.dim,
+                            self.lam,
+                            self.b,
+                        )
+                        temp = np.zeros(self.dim)
+                        for j in range(len(beta[n])):
+                            temp = temp + self.w[i, j] * beta[n, j]
+                        noise = np.random.normal(0, self.sigma, self.dim)
+                        beta[n, i] = (
+                            temp - step * g + math.sqrt(2 * step) * noise
+                        )
+                    else:
+                        # Vanila Part
+                        g = self.gradient_linreg(
+                            beta[n, i],
+                            self.x[i],
+                            self.y[i],
+                            self.dim,
+                            self.lam,
+                            self.b,
+                        )
+                        temp = np.zeros(self.dim)
+                        for j in range(len(beta[n])):
+                            temp = temp + w1[i, j] * beta[n, j]
+                        noise = np.random.multivariate_normal(
+                            mean=np.zeros(self.dim), cov=np.eye(self.dim)
+                        )
+                        beta[n, i] = (
+                            temp - step * g + math.sqrt(2 * step) * noise
+                        )
+                        # Extra Part
+                        g = self.gradient_linreg(
+                            beta[n, i],
+                            self.x[i],
+                            self.y[i],
+                            self.dim,
+                            self.lam,
+                            self.b,
+                        )
+                        temp = np.zeros(self.dim)
+                        for j in range(len(beta[n])):
+                            temp = temp + self.w[i, j] * beta[n, j]
+                        noise = np.random.multivariate_normal(
+                            mean=np.zeros(self.dim), cov=np.eye(self.dim)
+                        )
+                        beta[n, i] = (
+                            temp - step * g + math.sqrt(2 * step) * noise
+                        )
+
+            history = np.empty((self.size_w, self.dim, self.N))
+            beta_mean = np.empty((self.dim, self.N))
+            for i in range(self.N):
+                history[:, :, i] = beta[i, :, :]
+            for j in range(self.dim):
+                beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+            history_all_h.append(history)
+            beta_mean_all_h.append(beta_mean)
+        history_all.append(history_all_h)
+        beta_mean_all.append(beta_mean_all_h)
+    return np.array(history_all), np.array(beta_mean_all)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.desgld.desgld_alg.DeSGLD.gradient_linreg" class="doc doc-heading">
+          <code class=" language-python">gradient_linreg(beta, x, y, dim, lam, b)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gradient function for the linear regression</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>beta</code></b>
+              –
+              <div class="doc-md-description">
+                <p>approximation at each node</p>
+              </div>
+            </li>
+            <li>
+              <b><code>x</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the input data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>y</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the output data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>dim</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the dimension of the input data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>lam</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the regularization parameter</p>
+              </div>
+            </li>
+            <li>
+              <b><code>b</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the batch size</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>      
+
+          <details class="quote">
+            <summary>Source code in <code>src/desgld/desgld_alg.py</code></summary>
+            <pre class="codehilite"><code class="language-python">def gradient_linreg(self, beta, x, y, dim, lam, b):
+    """Gradient function for the linear regression
+
+    Args:
+        beta: approximation at each node
+        x: the input data
+        y: the output data
+        dim: the dimension of the input data
+        lam: the regularization parameter
+        b: the batch size
+    Returns:
+        gradient for the the logistic regression
+    """
+    f = np.zeros(dim)
+    randomList = np.random.randint(0, len(y) - 1, size=int(b))
+    for i in randomList:
+        f = f - np.dot((y[i] - np.dot(beta, x[i])), x[i])
+    f += (2 / lam) * beta
+    return f</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.desgld.desgld_alg.DeSGLD.gradient_logreg" class="doc doc-heading">
+          <code class=" language-python">gradient_logreg(beta, x, y, dim, lam, b)</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Gradient function for the logistic regression</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>beta</code></b>
+              –
+              <div class="doc-md-description">
+                <p>approximation at each node</p>
+              </div>
+            </li>
+            <li>
+              <b><code>x</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the input data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>y</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the output data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>dim</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the dimension of the input data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>lam</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the regularization parameter</p>
+              </div>
+            </li>
+            <li>
+              <b><code>b</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the batch size</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>      
+
+          <details class="quote">
+            <summary>Source code in <code>src/desgld/desgld_alg.py</code></summary>
+            <pre class="codehilite"><code class="language-python">def gradient_logreg(self, beta, x, y, dim, lam, b):
+    """Gradient function for the logistic regression
+
+    Args:
+        beta: approximation at each node
+        x: the input data
+        y: the output data
+        dim: the dimension of the input data
+        lam: the regularization parameter
+        b: the batch size
+    Returns:
+        gradient for the the logistic regression
+    """
+    f = np.zeros(dim)
+    randomList = np.random.randint(0, len(y) - 1, size=int(b))
+    for item in randomList:
+        h = 1 / (1 + np.exp(-np.dot(beta, x[item])))
+        f -= np.dot((y[item] - h), x[item])
+    f += (2 / lam) * beta
+    return f</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.desgld.desgld_alg.DeSGLD.vanila_desgld" class="doc doc-heading">
+          <code class=" language-python">vanila_desgld()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Vanila DeSGLD algorithm</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>params</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the same parameters from the class</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+    <th class="field-name">Returns:</th>
+    <td class="field-body">
+      <ul class="first simple">
+          <li>
+<b><code>history_all</code></b>            –
+            <div class="doc-md-description">
+              <p>contains the approximation from all the nodes</p>
+            </div>
+          </li>
+          <li>
+<b><code>beta_mean_all</code></b>            –
+            <div class="doc-md-description">
+              <p>contains the mean of the approximation from</p>
+            </div>
+          </li>
+          <li>
+            –
+            <div class="doc-md-description">
+              <p>all the nodes</p>
+            </div>
+          </li>
+      </ul>
+    </td>
+    </tr>
+  </tbody>
+</table>
+          <details class="quote">
+            <summary>Source code in <code>src/desgld/desgld_alg.py</code></summary>
+            <pre class="codehilite"><code class="language-python">def vanila_desgld(self):
+    """Vanila DeSGLD algorithm
+
+    Args:
+        params: the same parameters from the class
+
+    Returns:
+        history_all: contains the approximation from all the nodes
+        beta_mean_all: contains the mean of the approximation from
+        all the nodes
+    """
+    # Initialization
+    if self.reg_type == "logistic":
+        beta = np.random.normal(
+            0, self.sigma, size=(self.N, self.size_w, self.dim)
+        )
+    else:
+        beta = np.random.multivariate_normal(
+            mean=np.zeros(self.dim),
+            cov=np.eye(self.dim),
+            size=(self.N, self.size_w),
+        )
+    history_all = []
+    beta_mean_all = []
+    for t in range(1):
+        history = np.empty((self.size_w, self.dim, self.N))
+        beta_mean = np.empty((self.dim, self.N))
+        for i in range(self.N):
+            history[:, :, i] = beta[i, :, :]
+        for j in range(self.dim):
+            beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+        history_all.append(history)
+        beta_mean_all.append(beta_mean)
+
+    # Update
+    step = self.eta
+    for t in range(self.T):
+        for n in range(self.N):
+            for i in range(self.size_w):
+                if self.reg_type == "logistic":
+                    g = self.gradient_logreg(
+                        beta[n, i],
+                        self.x[i],
+                        self.y[i],
+                        self.dim,
+                        self.lam,
+                        self.b,
+                    )
+                    temp = np.zeros(self.dim)
+                    for j in range(len(beta[n])):
+                        temp = temp + self.w[i, j] * beta[n, j]
+                    noise = np.random.normal(0, self.sigma, self.dim)
+                    beta[n, i] = (
+                        temp - step * g + math.sqrt(2 * step) * noise
+                    )
+                else:
+                    g = self.gradient_linreg(
+                        beta[n, i],
+                        self.x[i],
+                        self.y[i],
+                        self.dim,
+                        self.lam,
+                        self.b,
+                    )
+                    temp = np.zeros(self.dim)
+                    for j in range(len(beta[n])):
+                        temp = temp + self.w[i, j] * beta[n, j]
+                    noise = np.random.multivariate_normal(
+                        mean=np.zeros(self.dim), cov=np.eye(self.dim)
+                    )
+                    beta[n, i] = (
+                        temp - step * g + math.sqrt(2 * step) * noise
+                    )
+
+        history = np.empty((self.size_w, self.dim, self.N))
+        beta_mean = np.empty((self.dim, self.N))
+        for i in range(self.N):
+            history[:, :, i] = beta[i, :, :]
+        for j in range(self.dim):
+            beta_mean[j, :] = np.mean(history[:, j, :], axis=0)
+        history_all.append(history)
+        beta_mean_all.append(beta_mean)
+    return np.array(history_all), np.array(beta_mean_all)</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+    
+  </span>
+</div>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.6.0
+Build Date UTC : 2024-04-29 20:05:06.925804+00:00
+-->

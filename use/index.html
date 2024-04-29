@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Usage - desgld0.1.0</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Usage";
+        var mkdocs_page_input_path = "use.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> desgld0.1.0
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../desgld/">DeSGLD</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../net/">Network Structure</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../evaluation/">Evaluation</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Usage</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#demo-example">Demo Example</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bayesian-logistic-regression-with-synthetic-data">Bayesian Logistic Regression with Synthetic Data</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#bayesian-linear-regression-with-synthetic-data">Bayesian Linear Regression with Synthetic Data</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../about/">Package</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">desgld0.1.0</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Usage</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="usage-example">Usage Example</h1>
+<div style="text-align: justify">
+Bellow is an example of how to use the package `desgld`. Just like any other
+package you usually install, you can install the `desgld` package using the
+following command either in terminal or command line
+</div>
+
+<p><code>pip install git+ssh://git@github.com/mrislambd/desgld_package.git</code></p>
+<h2 id="demo-example">Demo Example</h2>
+<p>Here this is a complete example of how to use the package <code>desgld</code>.  </p>
+<pre class="codehilite"><code>import matplotlib.pyplot as plt
+import matplotlib as mpl
+import numpy as np
+from tqdm import tqdm
+from sklearn.model_selection import train_test_split
+from desgld import DeSGLD
+from desgld import NetworkArchitecture
+from desgld import ClassificationAccuracy
+from desgld import Wasserstein2Distance
+</code></pre>
+
+<h2 id="bayesian-logistic-regression-with-synthetic-data">Bayesian Logistic Regression with Synthetic Data</h2>
+<p><strong>Parameters</strong></p>
+<pre class="codehilite"><code>size_w=6; N=100; sigma=1; eta=0.0005; T=20; dim=3; b=32; lam=10; total_data=1000; hv=np.linspace(0.001,0.5,5)
+</code></pre>
+
+<p><strong>Data</strong>  </p>
+<pre class="codehilite"><code>x = []
+np.random.seed(10)
+for i in range(total_data):
+    x.append([-20 + (20 + 20) * np.random.normal(), -10 + np.random.normal()])
+np.random.seed(11)
+y = [1 / (1 + np.exp(-item[0] * 1 - 1 * item[1] + 10)) for item in x]
+for i in range(len(y)):
+    temp = np.random.uniform(0, 1)
+    if temp &lt;= y[i]:
+        y[i] = 1
+    else:
+        y[i] = 0
+
+x_all = np.array(x)
+y_all = np.array(y)
+x_all = x
+y_all = y
+x_all = np.insert(x_all, 0, 1, axis=1)
+x = x_all
+
+'''
+    Data splitting
+'''
+
+X_train1, x_trainRemain, y_train1, y_trainRemain = train_test_split(
+    x, y, test_size=0.83333, random_state=42
+)
+X_train2, x_trainRemain, y_train2, y_trainRemain = train_test_split(
+    x_trainRemain, y_trainRemain, test_size=0.8, random_state=42
+)
+X_train3, x_trainRemain, y_train3, y_trainRemain =train_test_split(
+    x_trainRemain, y_trainRemain, test_size=0.75, random_state=42
+)
+X_train4, x_trainRemain, y_train4, y_trainRemain = train_test_split(
+    x_trainRemain, y_trainRemain, test_size=0.66666666, random_state=42
+)
+X_train5, X_train6, y_train5, y_train6 = train_test_split(
+    x_trainRemain, y_trainRemain,test_size=0.5, random_state=42
+)
+x = [X_train1, X_train2, X_train3, X_train4, X_train5, X_train6]
+y = [y_train1, y_train2, y_train3, y_train4, y_train5, y_train6]
+</code></pre>
+
+<p><strong>Vanila DeSGLD approximation</strong>  </p>
+<pre class="codehilite"><code>net=NetworkArchitecture(size_w)
+wf=net.fully_connected()
+wc=net.circular_network()
+wd=net.fully_disconnected()
+
+nets=np.array([wf,wc,wd])
+</code></pre>
+
+<p>Run the Vanila DeSGLD algorithm for all three networks  </p>
+<pre class="codehilite"><code>three_net_combined=[]
+for i in tqdm(range(len(nets))):
+    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'logistic')
+    vdesgld,_=method.vanila_desgld()
+    three_net_combined.append(vdesgld)
+</code></pre>
+
+<p>Compute the accuracy  </p>
+<pre class="codehilite"><code>desgld_acc=[]
+desgld_std=[]
+for desgld in tqdm(three_net_combined):
+    desgld_accuracy=ClassificationAccuracy(x_all,y_all,desgld,T)
+    d_acc,d_std=desgld_accuracy.compute_accuracy()
+    desgld_acc.append(d_acc)
+    desgld_std.append(d_std)
+desgld_acc=np.array(desgld_acc)
+desgld_std=np.array(desgld_std)
+</code></pre>
+
+<p>Next we plot the accuracy of the classification from the vanila DeSGLD</p>
+<pre class="codehilite"><code>fig, axs=plt.subplots(1, len(desgld_acc),figsize=(26.4,6.6))
+mpl.rcParams['font.size'] = 24
+index = list(range(T + 1))
+titles=[&quot;Fully Connected&quot;,&quot;Circular&quot;,&quot;Disconnected&quot;]
+for i, (d_acc, d_std, title) in enumerate(zip(desgld_acc, desgld_std, titles)):
+    axs[i].plot(d_acc, 'b-', linewidth=3)
+    axs[i].fill_between(index, d_acc + d_std, d_acc - d_std, alpha=0.5)
+    axs[i].set_title(title, fontsize=24)  
+    axs[i].legend(['Mean of accuracy', r'Accuracy $\pm$ Std'], loc='lower right', fontsize=24)
+    axs[i].set_xlabel(r'Iterations $k$', fontsize=20)  
+    axs[i].set_ylabel('Accuracy', fontsize=24)  
+    axs[i].set_ylim(0, 1)  
+    axs[i].tick_params(labelsize=24) 
+    axs[i].grid()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>The plot<br />
+<img alt="Figure 1" src="../plots/p1.png" />  </p>
+<p><strong>EXTRA-DeSGLD Approximation</strong>  </p>
+<pre class="codehilite"><code>three_net_combined=[]
+for i in tqdm(range(len(nets))):
+    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'logistic')
+    edesgld,_=method.extra_desgld()
+    three_net_combined.append(edesgld)
+</code></pre>
+
+<p>Accuracy Calculations  </p>
+<pre class="codehilite"><code>extradesgld_acc=[]
+extradesgld_std=[]
+for i in tqdm(range(len(nets))):
+    exacc=[]
+    exstd=[]
+    for j in range(len(hv)):
+        extradesgld_accuracy=ClassificationAccuracy(
+            x_all,y_all,three_net_combined[i][j],T
+        )
+        acc,std=extradesgld_accuracy.compute_accuracy()
+        exacc.append(acc)
+        exstd.append(std)
+    extradesgld_acc.append(exacc)
+    extradesgld_std.append(exstd)
+
+extradesgld_acc=np.array(extradesgld_acc)
+extradesgld_std=np.array(extradesgld_std)
+</code></pre>
+
+<p>Plot of the EXTRA DE-SGLD for each of the <code>h</code> values</p>
+<pre class="codehilite"><code>fig, axs=plt.subplots(1, 3,figsize=(26.4,8.6),sharex=True, sharey=True)
+mpl.rcParams['font.size'] = 24
+index = list(range(T + 1))
+
+
+titles=['Fully Connected','Circular','Disconnected']
+
+for j, title in enumerate(titles):
+    for i, h_value in enumerate(hv):
+        axs[j].plot(index,extradesgld_acc[j][i], label=f'h = {h_value:.3f}')
+    axs[j].set_title(title, fontsize=24)  
+    axs[j].legend(loc='lower right')
+    axs[j].set_xlabel(r'Iterations $k$', fontsize=20)  
+    axs[j].set_ylabel('Accuracy', fontsize=24)  
+    axs[j].set_ylim(0, 1)  
+    axs[j].tick_params(labelsize=24) 
+    axs[j].grid()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p><img alt="Figure 2" src="../plots/p2.png" />  </p>
+<p>Find the Maximum Accuracy for the optimal <code>h</code> values</p>
+<pre class="codehilite"><code>max_acc_arrays = []
+max_acc_indices = []
+
+for i in range(len(nets)):
+    max_acc_array = extradesgld_acc[i][np.argmax(np.max(extradesgld_acc[i], axis=1))]
+    max_acc_index = np.argmax(np.max(extradesgld_acc[i], axis=1))
+    max_acc_arrays.append(max_acc_array)
+    max_acc_indices.append(max_acc_index)
+
+max_acc_arrays = np.array(max_acc_arrays)
+max_acc_indices = np.array(max_acc_indices)
+max_hv_values = hv[max_acc_indices]
+
+max_acc_stds=np.zeros((len(nets), (T+1)))
+for i in range(len(nets)):
+    max_acc_stds[i] = extradesgld_std[i, max_acc_indices[i]]
+</code></pre>
+
+<p>Next plot the maximum accuracy for the optimal <code>h</code>  </p>
+<pre class="codehilite"><code>fig, axs=plt.subplots(1, 3,figsize=(26.4,6.6),sharex=True, sharey=True)
+
+mpl.rcParams['font.size'] = 24
+index = list(range(T + 1))
+
+
+titles=['Fully Connected','Circular','Disconnected']
+
+for i,title in enumerate(titles):
+    axs[i].plot(max_acc_arrays[i],'r-', linewidth=3,label=f'h = {max_hv_values[i]:.3f}')
+    axs[i].fill_between(
+        index,max_acc_arrays[i]+max_acc_stds[i],max_acc_arrays[i]-max_acc_stds[i],alpha=0.25,color='red'
+    )
+    axs[i].set_title(title, fontsize=24)  
+    axs[i].legend(loc='lower right')
+    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)  
+    axs[i].set_ylabel('Accuracy', fontsize=24)  
+    axs[i].set_ylim(0, 1)  
+    axs[i].tick_params(labelsize=24) 
+    axs[i].grid()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p><img alt="Figure 3" src="../plots/p3.png" />  </p>
+<p>Now we can compare the approximations from both of the 
+Vanila and Extra DeSGLD algorithms</p>
+<pre class="codehilite"><code>fig, axs = plt.subplots(1, 3, figsize=(26.4, 6.6), sharex=True, sharey=True)
+
+mpl.rcParams['font.size'] = 24
+index = list(range(T + 1))
+
+titles = ['Fully Connected', 'Circular', 'Disconnected']
+
+for i, title in enumerate(titles):
+    axs[i].plot(desgld_acc[i], 'b-', linewidth=3, label=f'Vanila DESGLD')
+    axs[i].fill_between(
+        index, desgld_acc[i] + desgld_std[i], desgld_acc[i] - desgld_std[i], alpha=0.25, color='blue'
+    )
+
+    axs[i].plot(max_acc_arrays[i], 'r-', linewidth=3, label=f'EXTRA DESGLD, h = {max_hv_values[i]:.3f}')
+    axs[i].fill_between(
+        index, max_acc_arrays[i] + max_acc_stds[i], max_acc_arrays[i] - max_acc_stds[i], alpha=0.25, color='red'
+    )
+    axs[i].set_title(title, fontsize=24)
+    axs[i].legend(loc='lower right')
+    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)
+    axs[i].set_ylabel('Accuracy', fontsize=24)
+    axs[i].set_ylim(0, 1)
+    axs[i].tick_params(labelsize=24)
+    axs[i].grid()
+
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p><img alt="Figure 4" src="../plots/p4.png" />  </p>
+<h2 id="bayesian-linear-regression-with-synthetic-data">Bayesian Linear Regression with Synthetic Data</h2>
+<p><strong>Parameters</strong></p>
+<pre class="codehilite"><code>size_w=20; N=20; dim=2; sigma=np.eye(dim); sigma_sample=1; 
+eta=0.009 ; T=50; lam=10; b=50;  hv=np.linspace(0.001,0.5,5); 
+</code></pre>
+
+<p><strong>Data Generation</strong>  </p>
+<pre class="codehilite"><code>x=[]
+
+for i in range(1000):
+    x.append([np.random.random()*1])
+
+y=[item[0]*3-0.5+np.random.random() for item in x]
+
+x_all=np.array(x)
+y_all=np.array(y)
+x_all=np.insert(x_all, 0, 1, axis=1)
+cov_pri=lam*sigma
+
+avg_post=np.dot(
+    np.linalg.inv(np.linalg.inv(cov_pri)+np.dot(np.transpose(x_all),x_all)/(sigma_sample**2)),
+    (np.dot(np.transpose(x_all),y_all)/(sigma_sample**2))
+)
+cov_post=np.linalg.inv(np.linalg.inv(cov_pri)+np.dot(np.transpose(x_all),x_all)/(sigma_sample**2))
+
+x=np.split(x_all,100)
+y=np.split(y_all,100)
+</code></pre>
+
+<p><strong>Vanila DeSGLD Approximation</strong>  </p>
+<p>Run the Vanila DeSGLD algorithm for all three networks  </p>
+<pre class="codehilite"><code>three_net_combined_agents=[]
+three_net_combined_magents=[]
+for i in tqdm(range(len(nets))):
+    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'linear')
+    desgld_agents,desgld_magents=method.vanila_desgld()
+    three_net_combined_agents.append(desgld_agents)
+    three_net_combined_magents.append(desgld_magents)
+</code></pre>
+
+<p>Compute the <code>w_2</code> distance  </p>
+<pre class="codehilite"><code>desgld_three_net_combined_dist=[]
+for dis_agent,dis_magent in tqdm(zip(three_net_combined_agents,three_net_combined_magents)):
+    distance=Wasserstein2Distance(size_w,T,avg_post,cov_post,dis_agent,dis_magent)
+    dis=distance.W2_dist()
+    desgld_three_net_combined_dist.append(dis)
+</code></pre>
+
+<p>Next plot the distances  </p>
+<pre class="codehilite"><code>fig, axs=plt.subplots(1, 3,figsize=(26.4,6.6))
+mpl.rcParams['font.size'] = 24
+index = list(range(T + 1))
+titles=[&quot;Fully Connected: DESGLD&quot;,&quot;Circular: DESGLD&quot;,&quot;Disconnected: DESGLD&quot;]
+
+for i in range(len(desgld_three_net_combined_dist)):
+    axs[i].plot(index,desgld_three_net_combined_dist[i][0],linewidth=3,label=r'Agent 1 $x_1^{(k)}$')
+    axs[i].plot(desgld_three_net_combined_dist[i][1],linewidth=3,label=r'Agent 2 $x_2^{(k)}$')
+    axs[i].plot(desgld_three_net_combined_dist[i][2],linewidth=3,label=r'Agent 3 $x_3^{(k)}$')
+    axs[i].plot(desgld_three_net_combined_dist[i][3],linewidth=3,label=r'Agent 4 $x_4^{(k)}$')
+    axs[i].plot(desgld_three_net_combined_dist[i][-1],linewidth=3,label=r'Mean of Agents $\bar{x}^{(k)}$')
+    axs[i].set_title(titles[i], fontsize=24)
+    axs[i].legend(loc='upper right', fontsize=17)
+    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)  
+    axs[i].set_ylabel(r'$\mathcal{W}_2$ Distance ', fontsize=24)    
+    axs[i].tick_params(labelsize=24) 
+    axs[i].grid()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>Here is the plot<br />
+<img alt="Figure 5" src="../plots/p5.png" />  </p>
+<p><strong>EXTRA DeSGLD Approximation</strong>  </p>
+<p>Run the EXTRA DeSGLD algorithm for all three networks</p>
+<pre class="codehilite"><code>three_net_combined_agents=[]
+three_net_combined_magents=[]
+for i in tqdm(range(len(nets))):
+    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'linear')
+    edesgld_agents,edesgld_magents=method.extra_desgld()
+    three_net_combined_agents.append(edesgld_agents)
+    three_net_combined_magents.append(edesgld_magents)
+</code></pre>
+
+<p>Compute the <code>w_2</code>  Distances  </p>
+<pre class="codehilite"><code>extradesgld_three_net_combined_dist=[]
+
+for i in tqdm(range(len(nets))):
+    ex=[]
+    for j in range(len(hv)):
+        extradistance=Wasserstein2Distance(
+            size_w,T,avg_post,cov_post,
+            three_net_combined_agents[i][j],
+            three_net_combined_magents[i][j]
+        )
+        ex.append(extradistance.W2_dist())
+    extradesgld_three_net_combined_dist.append(ex)
+
+extradesgld_three_net_combined_dist=np.array(extradesgld_three_net_combined_dist)
+</code></pre>
+
+<p>Work with the <code>w_2</code> distances of mean agents  </p>
+<pre class="codehilite"><code>mean_dist = np.empty((len(nets), len(hv), T+1))
+for i in tqdm(range(len(nets))):
+    for j in range(len(hv)):
+        mean_dist[i, j, :] = extradesgld_three_net_combined_dist[i, j, -1, :]
+</code></pre>
+
+<p>Plot the <code>w_2</code> distance of mean agents for each <code>h</code> values</p>
+<pre class="codehilite"><code>fig, axs=plt.subplots(1,3, figsize=(26.4,8.6), sharex=True, sharey=True)
+mpl.rcParams['font.size']=24
+
+titles=['Fully Connected','Circular', 'Disconnected']
+
+for j, title in enumerate(titles):
+    for i,h_value in enumerate(hv):
+        axs[j].plot(mean_dist[j][i],linewidth=3, label=f'h={h_value:.3f}')
+    axs[j].set_title(title, fontsize=24)
+    axs[j].set_xlabel(r'Iterations $k$', fontsize=24)
+    axs[j].set_ylabel(r'$\mathcal{W}_2$ Dist. of mean agents', fontsize=24)
+    axs[j].tick_params(labelsize=24)
+    axs[j].legend(loc='upper right')
+    axs[j].grid()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p><img alt="Figure 6" src="../plots/p6.png" />  </p>
+<p>Find the minimum distance for optimal <code>h</code> values  </p>
+<pre class="codehilite"><code>min_dist_arrays=[]
+min_dist_indices=[]
+
+for i in range(len(nets)):
+    min_dist_array=mean_dist[i][np.argmin(np.min(mean_dist[i],axis=1))]
+    min_dist_index=np.argmin(np.min(mean_dist[i],axis=1))
+    min_dist_arrays.append(min_dist_array)
+    min_dist_indices.append(min_dist_index)
+
+min_dist_arrays=np.array(min_dist_arrays)
+min_dist_indices=np.array(min_dist_indices)
+min_hv_values=hv[min_dist_indices]
+min_hv_values
+</code></pre>
+
+<p>Plot the <em>Optimal EXTRA DeSGLD Mean Distance</em> for the optimal <code>h</code> value  </p>
+<pre class="codehilite"><code>fig,axs=plt.subplots(1,3,figsize=(26.4,8.6),sharex=True, sharey=True)
+mpl.rcParams['font.size']=24
+
+titles=['Fully Connected','Circular', 'Disconnected']
+
+for i,title in enumerate(titles):
+    axs[i].plot(min_dist_arrays[i],'r-',linewidth=3,label=f'h={min_hv_values[i]:.3f}')
+    axs[i].set_title(title,fontsize=24)
+    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)
+    axs[i].set_ylabel(r'$\mathcal{W}_2$ Dist. of mean agents', fontsize=24)
+    axs[i].tick_params(labelsize=24)
+    axs[i].legend(loc='upper right')
+    axs[i].grid()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p><img alt="Figure 7" src="../plots/p7.png" /> </p>
+<p>Finally, we can compare the performances from both of the
+algorithms  </p>
+<pre class="codehilite"><code>fig,axs=plt.subplots(1,3,figsize=(26.4,8.6),sharex=True, sharey=True)
+mpl.rcParams['font.size']=24
+
+titles=['Fully Connected','Circular', 'Disconnected']
+
+for i,title in enumerate(titles):
+    axs[i].plot(min_dist_arrays[i],'r-',linewidth=3,label=f'EXTRA DESGLD for h={min_hv_values[i]:.3f}')
+    axs[i].plot(desgld_three_net_combined_dist[i][-1],linewidth=3,label='Vanila DESGLD')
+    axs[i].set_title(title,fontsize=24)
+    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)
+    axs[i].set_ylabel(r'$\mathcal{W}_2$ Dist. of mean agents', fontsize=24)
+    axs[i].tick_params(labelsize=24)
+    axs[i].legend(loc='upper right')
+    axs[i].grid()
+plt.tight_layout()
+plt.show()
+</code></pre>
+
+<p>And, here is the plot  </p>
+<p><img alt="Figure 8" src="../plots/p8.png" /></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../evaluation/" class="btn btn-neutral float-left" title="Evaluation"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../about/" class="btn btn-neutral float-right" title="Package">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../evaluation/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../about/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

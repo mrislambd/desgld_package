@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Evaluation - desgld0.1.0</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Evaluation";
+        var mkdocs_page_input_path = "evaluation.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> desgld0.1.0
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../desgld/">DeSGLD</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../net/">Network Structure</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Evaluation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#src.desgld.evaluation">evaluation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.desgld.evaluation.ClassificationAccuracy">ClassificationAccuracy</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.desgld.evaluation.ClassificationAccuracy.compute_accuracy">compute_accuracy</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#src.desgld.evaluation.Wasserstein2Distance">Wasserstein2Distance</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#src.desgld.evaluation.Wasserstein2Distance.W2_dist">W2_dist</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../use/">Usage</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../about/">Package</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">desgld0.1.0</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Evaluation</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="evaluation-of-the-approximations">Evaluation of the Approximations</h1>
+<div style="text-align: justify">
+This Module provides the detailes of the evaluation of the approximation 
+from both of the regressions. For the Bayesian logistic regression
+we use the ClassificationAccuracy class and for the Bayesian linear
+regression we use the the Wasserstein2Distance class.
+</div>
+
+
+
+<div class="doc doc-object doc-module">
+
+
+
+<a id="src.desgld.evaluation"></a>
+  <div class="doc doc-contents first">
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="src.desgld.evaluation.ClassificationAccuracy" class="doc doc-heading">
+          <code>ClassificationAccuracy</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Calculate the classification accuracy in Bayesian Logistic Regression</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>x_all</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>the input data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>y_all</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>the output data</p>
+              </div>
+            </li>
+            <li>
+              <b><code>history_all</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>contains the approximation from all the nodes</p>
+              </div>
+            </li>
+            <li>
+              <b><code>T</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the number of iterations</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
+              <pre class="codehilite"><code class="language-python">class ClassificationAccuracy:
+    """Calculate the classification accuracy in Bayesian Logistic Regression
+
+    Args:
+        x_all (list): the input data
+        y_all (list): the output data
+        history_all (list): contains the approximation from all the nodes
+        T (int): the number of iterations
+    """
+
+    def __init__(self, x_all, y_all, history_all, T):
+        self.x_all = x_all
+        self.y_all = y_all
+        self.history_all = history_all
+        self.T = T
+
+    def compute_accuracy(self):
+        """Function that computes the classification accuracy
+
+        Args:
+            params: the same parameters from the class
+
+        Returns:
+        result_acc (float): the classification accuracy
+        result_std (float): the standard deviation of the classification
+        accuracy
+        """
+        mis_class = np.empty((self.T + 1, len(self.history_all[0, 0, 0])))
+
+        for t in range(self.T + 1):
+            for n in range(len(self.history_all[t, 0, 0])):
+                temp0 = 0
+                for i in range(len(self.x_all)):
+                    z = 1 / (
+                        1
+                        + np.exp(
+                            -np.dot(
+                                np.transpose(self.history_all[t, 1])[n],
+                                self.x_all[i],
+                            )
+                        )
+                    )
+                    if z &gt;= 0.5:
+                        z = 1
+                    else:
+                        z = 0
+                    if self.y_all[i] != z:
+                        temp0 += 1
+                mis_class[t, n] = 1 - temp0 / len(self.x_all)
+
+        result_acc = np.mean(mis_class, axis=1)
+        result_std = np.std(mis_class, axis=1)
+        return result_acc, result_std</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.desgld.evaluation.ClassificationAccuracy.compute_accuracy" class="doc doc-heading">
+          <code class=" language-python">compute_accuracy()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Function that computes the classification accuracy</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>params</code></b>
+              –
+              <div class="doc-md-description">
+                <p>the same parameters from the class</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>      <p>result_acc (float): the classification accuracy
+result_std (float): the standard deviation of the classification
+accuracy</p>
+
+          <details class="quote">
+            <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
+            <pre class="codehilite"><code class="language-python">def compute_accuracy(self):
+    """Function that computes the classification accuracy
+
+    Args:
+        params: the same parameters from the class
+
+    Returns:
+    result_acc (float): the classification accuracy
+    result_std (float): the standard deviation of the classification
+    accuracy
+    """
+    mis_class = np.empty((self.T + 1, len(self.history_all[0, 0, 0])))
+
+    for t in range(self.T + 1):
+        for n in range(len(self.history_all[t, 0, 0])):
+            temp0 = 0
+            for i in range(len(self.x_all)):
+                z = 1 / (
+                    1
+                    + np.exp(
+                        -np.dot(
+                            np.transpose(self.history_all[t, 1])[n],
+                            self.x_all[i],
+                        )
+                    )
+                )
+                if z &gt;= 0.5:
+                    z = 1
+                else:
+                    z = 0
+                if self.y_all[i] != z:
+                    temp0 += 1
+            mis_class[t, n] = 1 - temp0 / len(self.x_all)
+
+    result_acc = np.mean(mis_class, axis=1)
+    result_std = np.std(mis_class, axis=1)
+    return result_acc, result_std</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+<div class="doc doc-object doc-class">
+
+
+
+<h2 id="src.desgld.evaluation.Wasserstein2Distance" class="doc doc-heading">
+          <code>Wasserstein2Distance</code>
+
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+
+  
+      <p>Class for: Wasserstein 2 distance in Bayesian Linear Regression</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>size_w</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the size of the network</p>
+              </div>
+            </li>
+            <li>
+              <b><code>T</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the number of iterations</p>
+              </div>
+            </li>
+            <li>
+              <b><code>avg_post</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>the mean of the posterior distribution</p>
+              </div>
+            </li>
+            <li>
+              <b><code>cov_post</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>the covariance of the posterior distribution</p>
+              </div>
+            </li>
+            <li>
+              <b><code>history_all</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>contains the approximation from all the nodes</p>
+              </div>
+            </li>
+            <li>
+              <b><code>beta_mean_all</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>contains the mean of the approximation</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+            <details class="quote">
+              <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
+              <pre class="codehilite"><code class="language-python">class Wasserstein2Distance:
+    """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+
+    Args:
+        size_w (int): the size of the network
+        T (int): the number of iterations
+        avg_post (list): the mean of the posterior distribution
+        cov_post (list): the covariance of the posterior distribution
+        history_all (list): contains the approximation from all the nodes
+        beta_mean_all (list): contains the mean of the approximation
+        from all the nodes
+    """
+
+    def __init__(
+        self, size_w, T, avg_post, cov_post, history_all, beta_mean_all
+    ):
+        self.size_w = size_w
+        self.T = T
+        self.avg_post = avg_post
+        self.cov_post = cov_post
+        self.history_all = history_all
+        self.beta_mean_all = beta_mean_all
+
+    def W2_dist(self):
+        """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+
+        Args:
+            size_w (int): the size of the network
+            T (int): the number of iterations
+            avg_post (list): the mean of the posterior distribution
+            cov_post (list): the covariance of the posterior distribution
+            history_all (list): contains the approximation from all the nodes
+            beta_mean_all (list): contains the mean of the approximation
+            from all the nodes
+        Returns:
+        w2dis (list): contains the W2 distance of each agent and
+        the mean of the approximation from all the ageents
+        """
+        w2dis = []
+        for i in range(self.size_w):
+            temp = []
+            w2dis.append(temp)
+        temp = []
+        w2dis.append(temp)
+        """
+        W2 distance of each agent
+        """
+        for i in range(self.size_w):
+            for t in range(self.T + 1):
+                d = 0
+                avg_temp = []
+                avg_temp.append(np.mean(self.history_all[t][i][0]))
+                avg_temp.append(np.mean(self.history_all[t][i][1]))
+                avg_temp = np.array(avg_temp)
+                cov_temp = np.cov(self.history_all[t][i])
+                d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
+                    self.avg_post - avg_temp
+                )
+                d = d + np.trace(
+                    self.cov_post
+                    + cov_temp
+                    - 2
+                    * sqrtm(
+                        np.dot(
+                            np.dot(sqrtm(cov_temp), self.cov_post),
+                            sqrtm(cov_temp),
+                        )
+                    )
+                )
+                w2dis[i].append(np.array(math.sqrt(abs(d))))
+        """
+        W2 distance of the mean of agents
+        """
+        for t in range(self.T + 1):
+            d = 0
+            avg_temp = []
+            avg_temp.append(np.mean(self.beta_mean_all[t][0]))
+            avg_temp.append(np.mean(self.beta_mean_all[t][1]))
+            avg_temp = np.array(avg_temp)
+            cov_temp = np.cov(self.beta_mean_all[t])
+            d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
+                self.avg_post - avg_temp
+            )
+            d = d + np.trace(
+                self.cov_post
+                + cov_temp
+                - 2
+                * sqrtm(
+                    np.dot(
+                        np.dot(sqrtm(cov_temp), self.cov_post), sqrtm(cov_temp)
+                    )
+                )
+            )
+            w2dis[self.size_w].append(np.array(math.sqrt(abs(d))))
+
+        for i in range(len(w2dis)):
+            w2dis[i] = np.array(w2dis[i])
+
+        return w2dis</code></pre>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<h3 id="src.desgld.evaluation.Wasserstein2Distance.W2_dist" class="doc doc-heading">
+          <code class=" language-python">W2_dist()</code>
+
+</h3>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>Class for: Wasserstein 2 distance in Bayesian Linear Regression</p>
+
+
+
+<table class="field-list">
+  <colgroup>
+    <col class="field-name" />
+    <col class="field-body" />
+  </colgroup>
+  <tbody valign="top">
+    <tr class="field">
+      <th class="field-name">Parameters:</th>
+      <td class="field-body">
+        <ul class="first simple">
+            <li>
+              <b><code>size_w</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the size of the network</p>
+              </div>
+            </li>
+            <li>
+              <b><code>T</code></b>
+                  (<code>int</code>)
+              –
+              <div class="doc-md-description">
+                <p>the number of iterations</p>
+              </div>
+            </li>
+            <li>
+              <b><code>avg_post</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>the mean of the posterior distribution</p>
+              </div>
+            </li>
+            <li>
+              <b><code>cov_post</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>the covariance of the posterior distribution</p>
+              </div>
+            </li>
+            <li>
+              <b><code>history_all</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>contains the approximation from all the nodes</p>
+              </div>
+            </li>
+            <li>
+              <b><code>beta_mean_all</code></b>
+                  (<code>list</code>)
+              –
+              <div class="doc-md-description">
+                <p>contains the mean of the approximation</p>
+              </div>
+            </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>      <p>w2dis (list): contains the W2 distance of each agent and
+the mean of the approximation from all the ageents</p>
+
+          <details class="quote">
+            <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
+            <pre class="codehilite"><code class="language-python">def W2_dist(self):
+    """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+
+    Args:
+        size_w (int): the size of the network
+        T (int): the number of iterations
+        avg_post (list): the mean of the posterior distribution
+        cov_post (list): the covariance of the posterior distribution
+        history_all (list): contains the approximation from all the nodes
+        beta_mean_all (list): contains the mean of the approximation
+        from all the nodes
+    Returns:
+    w2dis (list): contains the W2 distance of each agent and
+    the mean of the approximation from all the ageents
+    """
+    w2dis = []
+    for i in range(self.size_w):
+        temp = []
+        w2dis.append(temp)
+    temp = []
+    w2dis.append(temp)
+    """
+    W2 distance of each agent
+    """
+    for i in range(self.size_w):
+        for t in range(self.T + 1):
+            d = 0
+            avg_temp = []
+            avg_temp.append(np.mean(self.history_all[t][i][0]))
+            avg_temp.append(np.mean(self.history_all[t][i][1]))
+            avg_temp = np.array(avg_temp)
+            cov_temp = np.cov(self.history_all[t][i])
+            d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
+                self.avg_post - avg_temp
+            )
+            d = d + np.trace(
+                self.cov_post
+                + cov_temp
+                - 2
+                * sqrtm(
+                    np.dot(
+                        np.dot(sqrtm(cov_temp), self.cov_post),
+                        sqrtm(cov_temp),
+                    )
+                )
+            )
+            w2dis[i].append(np.array(math.sqrt(abs(d))))
+    """
+    W2 distance of the mean of agents
+    """
+    for t in range(self.T + 1):
+        d = 0
+        avg_temp = []
+        avg_temp.append(np.mean(self.beta_mean_all[t][0]))
+        avg_temp.append(np.mean(self.beta_mean_all[t][1]))
+        avg_temp = np.array(avg_temp)
+        cov_temp = np.cov(self.beta_mean_all[t])
+        d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
+            self.avg_post - avg_temp
+        )
+        d = d + np.trace(
+            self.cov_post
+            + cov_temp
+            - 2
+            * sqrtm(
+                np.dot(
+                    np.dot(sqrtm(cov_temp), self.cov_post), sqrtm(cov_temp)
+                )
+            )
+        )
+        w2dis[self.size_w].append(np.array(math.sqrt(abs(d))))
+
+    for i in range(len(w2dis)):
+        w2dis[i] = np.array(w2dis[i])
+
+    return w2dis</code></pre>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+
+</div>
+
+
+
+
+  </div>
+
+  </div>
+
+</div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../net/" class="btn btn-neutral float-left" title="Network Structure"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../use/" class="btn btn-neutral float-right" title="Usage">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../net/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../use/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
