@@ -5,28 +5,32 @@ from scipy.linalg import sqrtm
 
 
 class ClassificationAccuracy:
-    """Calculate the classification accuracy in Bayesian Logistic Regression"""
+    """Calculate the classification accuracy in Bayesian Logistic Regression
+
+    Args:
+        x_all (list): the input data
+        y_all (list): the output data
+        history_all (list): contains the approximation from all the nodes
+        T (int): the number of iterations
+    """
 
     def __init__(self, x_all, y_all, history_all, T):
-        """
-        :param x_all: the input data
-        :param y_all: the output data
-        :param: history_all: contains the approximation from all the nodes
-        :param T: the number of iterations
-        """
         self.x_all = x_all
         self.y_all = y_all
         self.history_all = history_all
         self.T = T
 
     def compute_accuracy(self):
-        """Accuracy computation function"""
+        """Function that computes the classification accuracy
 
-        """
-        This function is used to compute the classification accuracy
-        :return: misclassification
-        """
+        Args:
+            params: the same parameters from the class
 
+        Returns:
+        result_acc (float): the classification accuracy
+        result_std (float): the standard deviation of the classification
+        accuracy
+        """
         mis_class = np.empty((self.T + 1, len(self.history_all[0, 0, 0])))
 
         for t in range(self.T + 1):
@@ -56,20 +60,21 @@ class ClassificationAccuracy:
 
 
 class Wasserstein2Distance:
-    """Calculate the Wasserstein 2 distance in Bayesian Linear Regression"""
+    """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+
+    Args:
+        size_w (int): the size of the network
+        T (int): the number of iterations
+        avg_post (list): the mean of the posterior distribution
+        cov_post (list): the covariance of the posterior distribution
+        history_all (list): contains the approximation from all the nodes
+        beta_mean_all (list): contains the mean of the approximation
+        from all the nodes
+    """
 
     def __init__(
         self, size_w, T, avg_post, cov_post, history_all, beta_mean_all
     ):
-        """
-        :param size_w: scaler, int: the size of the network
-        :param T: the number of iterations
-        :param avg_post: the mean of the posterior distribution
-        :param cov_post: the covariance of the posterior distribution
-        :param: history_all: contains the approximation from all the nodes
-        :param: beta_mean_all: contains the mean of the approximation
-        from all the nodes
-        """
         self.size_w = size_w
         self.T = T
         self.avg_post = avg_post
@@ -78,6 +83,20 @@ class Wasserstein2Distance:
         self.beta_mean_all = beta_mean_all
 
     def W2_dist(self):
+        """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+
+        Args:
+            size_w (int): the size of the network
+            T (int): the number of iterations
+            avg_post (list): the mean of the posterior distribution
+            cov_post (list): the covariance of the posterior distribution
+            history_all (list): contains the approximation from all the nodes
+            beta_mean_all (list): contains the mean of the approximation
+            from all the nodes
+        Returns:
+        w2dis (list): contains the W2 distance of each agent and
+        the mean of the approximation from all the ageents
+        """
         w2dis = []
         for i in range(self.size_w):
             temp = []
