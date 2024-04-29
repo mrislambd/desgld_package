@@ -3,6 +3,9 @@ from setuptools import setup
 requirements = [
     "numpy",
     "scipy",
+    "scikit-learn",
+    "matplotlib",
+    "tqdm",
 ]
 
 requirements_dev = ["black", "isort", "flake8", "pre-commit"]
