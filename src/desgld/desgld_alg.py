@@ -4,31 +4,32 @@ import numpy as np
 
 
 class DeSGLD:
-    """Decentralized Stochastic Gradient Langevin Dynamics"""
+    """Decentralized Stochastic Gradient Langevin Dynamics
 
-    """
-    This class is used to implement the decentralized stochastic gradient
-    Langevin dynamics for both the vanila and the extra algorithm.
+    Args:
+        size_w (int): the size of the network
+        N (int): the size of the array in each it
+        sigma (float): the variation of the noise
+        eta (float): the learning rate
+        T (float): the iteration number
+        dim (int): the dimension of the input data
+        b (int): the batch size
+        lam (float): the regularization parameter
+        x (float): the input data
+        y (float): the output data
+        w (float): the weight matrix from the network structure
+        hv (float): the tuning parameter for the extra algorithm
+        reg_type (str): the type of regressor used
+
+    Returns:
+        history_all: contains the approximation from all the nodes
+        beta_mean_all: contains the mean of the approximation from
+        all the nodes
     """
 
     def __init__(
         self, size_w, N, sigma, eta, T, dim, b, lam, x, y, w, hv, reg_type
     ):
-        """
-        :param size_w: scaler, int: the size of the network
-        :param N: scaler, int: the size of the array in each it
-        :param sigma: the variation of the noise
-        :param eta: scaler, float: float: the learning rate
-        :param dim: scaler, int: the dimension of the input data
-        :param b: scaler, int: the batch size
-        :param lam: scaler, int: the regularization parameter
-        :param x: the input data
-        :param y: the output data
-        :param w: 2D array, float: the weight matrix from the network structure
-        :param hv: 1D array, float: tuning parameter for the extra algorithm
-        :param reg_type: the type of regularization
-        :param T: scaler, int: the number of iterations
-        """
         self.size_w = size_w
         self.N = N
         self.sigma = sigma
@@ -44,10 +45,17 @@ class DeSGLD:
         self.reg_type = reg_type
 
     def gradient_logreg(self, beta, x, y, dim, lam, b):
-        """Gradient function for the logistic regression"""
+        """Gradient function for the logistic regression
 
-        """
-        :param f: gradient value for the set of input
+        Args:
+            beta: approximation at each node
+            x: the input data
+            y: the output data
+            dim: the dimension of the input data
+            lam: the regularization parameter
+            b: the batch size
+        Returns:
+            gradient for the the logistic regression
         """
         f = np.zeros(dim)
         randomList = np.random.randint(0, len(y) - 1, size=int(b))
@@ -58,10 +66,17 @@ class DeSGLD:
         return f
 
     def gradient_linreg(self, beta, x, y, dim, lam, b):
-        """Gradient function for the linear regression"""
+        """Gradient function for the linear regression
 
-        """
-        :param f: gradient value for the set of input
+        Args:
+            beta: approximation at each node
+            x: the input data
+            y: the output data
+            dim: the dimension of the input data
+            lam: the regularization parameter
+            b: the batch size
+        Returns:
+            gradient for the the logistic regression
         """
         f = np.zeros(dim)
         randomList = np.random.randint(0, len(y) - 1, size=int(b))
@@ -71,22 +86,16 @@ class DeSGLD:
         return f
 
     def vanila_desgld(self):
-        """Decentralized Stochastic Gradient Langevin Dynamics"""
+        """Vanila DeSGLD algorithm
 
-        """
-        This function is used to implement the decentralized stochastic
-        gradient Langevin dynamics for both the vanila algorithm.
-        It is designed to implement both the linear and logistic
-        regression.
-        """
+        Args:
+            params: the same parameters from the class
 
+        Returns:
+            history_all: contains the approximation from all the nodes
+            beta_mean_all: contains the mean of the approximation from
+            all the nodes
         """
-        :param: beta: approximation at each node
-        :param: history_all: contains the approximation from all the nodes
-        :param: beta_mean_all: contains the mean of the approximation
-        from all the nodes
-        """
-
         # Initialization
         if self.reg_type == "logistic":
             beta = np.random.normal(
@@ -161,28 +170,24 @@ class DeSGLD:
         return np.array(history_all), np.array(beta_mean_all)
 
     def extra_desgld(self):
-        """Decentralized Stochastic Gradient Langevin Dynamics"""
+        """EXTRA DeSGLD algorithm
 
-        """
-        This function is used to implement the decentralized stochastic
-        gradient Langevin dynamics for the vanila algorithm. It is designed
-        to implement both the Bayesian linear and logistic regression.
-        """
+        Args:
+            params: the same parameters from the class
 
+        Returns:
+            history_all: contains the approximation from all the nodes
+            beta_mean_all: contains the mean of the approximation from
+            all the nodes
         """
-        :param: beta: approximation at each node
-        :param: history_all: contains the approximation from all the nodes
-        :param: beta_mean_all: contains the mean of the approximation
-        from all the nodes
-        :param: I_n: the identity matrix
-        :param: w1: w1=h*I_n+(1-h)*w
-        """
+        # I_n is the identity matrix of the same size as the weight matrix
         I_n = np.eye(self.size_w)
         h_values = self.hv
 
         history_all = []
         beta_mean_all = []
         for h in h_values:
+            # w1 is the weight matrix with the hyperparameter h
             w1 = h * I_n + (1 - h) * self.w
 
             # Initialization
@@ -214,6 +219,7 @@ class DeSGLD:
                 for n in range(self.N):
                     for i in range(self.size_w):
                         if self.reg_type == "logistic":
+                            # Vanila Part
                             g = self.gradient_logreg(
                                 beta[n, i],
                                 self.x[i],
@@ -246,6 +252,7 @@ class DeSGLD:
                                 temp - step * g + math.sqrt(2 * step) * noise
                             )
                         else:
+                            # Vanila Part
                             g = self.gradient_linreg(
                                 beta[n, i],
                                 self.x[i],
