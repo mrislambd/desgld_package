@@ -40,6 +40,7 @@ class DeSGLD:
         self.y = y
         self.w = w
         self.hv = hv
+        self.T = T
         self.reg_type = reg_type
 
     def gradient_logreg(self, beta, x, y, dim, lam, b):
