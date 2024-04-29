@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class NetworkArchitecture:
     """Decentralized network architecture"""
 
@@ -17,10 +20,12 @@ class NetworkArchitecture:
         """
         :return: a fully connected network
         """
-        return [
-            [1 / self.size_w for _ in range(self.size_w)]
-            for _ in range(self.size_w)
-        ]
+        return np.array(
+            [
+                [1 / self.size_w for _ in range(self.size_w)]
+                for _ in range(self.size_w)
+            ]
+        )
 
     def circular_network(self):
         """
@@ -33,7 +38,7 @@ class NetworkArchitecture:
                     x[i][j] = 1 / 3
                 elif i == (j + 1) % self.size_w or j == (i + 1) % self.size_w:
                     x[i][j] = 1 / 3
-        return x
+        return np.array(x)
 
     def fully_disconnected(self):
         """
@@ -44,7 +49,7 @@ class NetworkArchitecture:
             for j in range(self.size_w):
                 if i == j:
                     x[i][j] = 1
-        return x
+        return np.array(x)
 
     def star_network(self):
         """
@@ -59,4 +64,4 @@ class NetworkArchitecture:
         ]
         for i in range(self.size_w):
             s[i][i] = 1 / self.size_w
-        return s
+        return np.array(s)
