@@ -11,7 +11,7 @@ class DeSGLD:
         N (int): the size of the array in each it
         sigma (float): the variation of the noise
         eta (float): the learning rate
-        T (float): the iteration number
+        T (int): the iteration number
         dim (int): the dimension of the input data
         b (int): the batch size
         lam (float): the regularization parameter
