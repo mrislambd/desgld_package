@@ -10,6 +10,9 @@ requirements = [
 
 requirements_dev = ["black", "isort", "flake8", "pre-commit"]
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 setup(
     name="desgld",
     version="0.1.0",
