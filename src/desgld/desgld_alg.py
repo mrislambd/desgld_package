@@ -22,9 +22,8 @@ class DeSGLD:
         reg_type (str): the type of regressor used
 
     Returns:
-        history_all: contains the approximation from all the nodes
-        beta_mean_all: contains the mean of the approximation from
-        all the nodes
+        vanila_desgld()
+        extra_desgld()
     """
 
     def __init__(
@@ -87,9 +86,6 @@ class DeSGLD:
 
     def vanila_desgld(self):
         """Vanila DeSGLD algorithm
-
-        Args:
-            params: the same parameters from the class
 
         Returns:
             history_all: contains the approximation from all the nodes
@@ -171,9 +167,6 @@ class DeSGLD:
 
     def extra_desgld(self):
         """EXTRA DeSGLD algorithm
-
-        Args:
-            params: the same parameters from the class
 
         Returns:
             history_all: contains the approximation from all the nodes
