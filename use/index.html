@@ -101,85 +101,85 @@ following command either in terminal or command line
 <p><code>pip install git+ssh://git@github.com/mrislambd/desgld_package.git</code></p>
 <h2 id="demo-example">Demo Example</h2>
 <p>Here this is a complete example of how to use the package <code>desgld</code>.  </p>
-<pre class="codehilite"><code>import matplotlib.pyplot as plt
-import matplotlib as mpl
-import numpy as np
-from tqdm import tqdm
-from sklearn.model_selection import train_test_split
-from desgld import DeSGLD
-from desgld import NetworkArchitecture
-from desgld import ClassificationAccuracy
-from desgld import Wasserstein2Distance
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">desgld</span> <span class="kn">import</span> <span class="n">DeSGLD</span>
+<span class="kn">from</span> <span class="nn">desgld</span> <span class="kn">import</span> <span class="n">NetworkArchitecture</span>
+<span class="kn">from</span> <span class="nn">desgld</span> <span class="kn">import</span> <span class="n">ClassificationAccuracy</span>
+<span class="kn">from</span> <span class="nn">desgld</span> <span class="kn">import</span> <span class="n">Wasserstein2Distance</span>
+</code></pre></div>
 
 <h2 id="bayesian-logistic-regression-with-synthetic-data">Bayesian Logistic Regression with Synthetic Data</h2>
 <p><strong>Parameters</strong></p>
-<pre class="codehilite"><code>size_w=6; N=100; sigma=1; eta=0.0005; T=20; dim=3; b=32; lam=10; total_data=1000; hv=np.linspace(0.001,0.5,5)
-</code></pre>
+<div class="codehilite"><pre><span></span><code>size_w=6; N=100; sigma=1; eta=0.0005; T=20; dim=3; b=32; lam=10; total_data=1000; hv=np.linspace(0.001,0.5,5)
+</code></pre></div>
 
 <p><strong>Data</strong>  </p>
-<pre class="codehilite"><code>x = []
-np.random.seed(10)
-for i in range(total_data):
-    x.append([-20 + (20 + 20) * np.random.normal(), -10 + np.random.normal()])
-np.random.seed(11)
-y = [1 / (1 + np.exp(-item[0] * 1 - 1 * item[1] + 10)) for item in x]
-for i in range(len(y)):
-    temp = np.random.uniform(0, 1)
-    if temp &lt;= y[i]:
-        y[i] = 1
-    else:
-        y[i] = 0
+<div class="codehilite"><pre><span></span><code><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="n">total_data</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">x</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="o">[</span><span class="n">-20 + (20 + 20) * np.random.normal(), -10 + np.random.normal()</span><span class="o">]</span><span class="p">)</span>
+<span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">1 / (1 + np.exp(-item[0</span><span class="o">]</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">item</span><span class="o">[</span><span class="n">1</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">10</span><span class="p">))</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">item</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">x</span><span class="err">]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">random</span><span class="p">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">temp</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">y</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="err">:</span>
+<span class="w">        </span><span class="n">y</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">    </span><span class="k">else</span><span class="err">:</span>
+<span class="w">        </span><span class="n">y</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
 
-x_all = np.array(x)
-y_all = np.array(y)
-x_all = x
-y_all = y
-x_all = np.insert(x_all, 0, 1, axis=1)
-x = x_all
+<span class="n">x_all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">y_all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">x_all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span>
+<span class="n">y_all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">y</span>
+<span class="n">x_all</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="k">insert</span><span class="p">(</span><span class="n">x_all</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x_all</span>
 
-'''
-    Data splitting
-'''
+<span class="s1">&#39;&#39;&#39;</span>
+<span class="s1">    Data splitting</span>
+<span class="s1">&#39;&#39;&#39;</span>
 
-X_train1, x_trainRemain, y_train1, y_trainRemain = train_test_split(
-    x, y, test_size=0.83333, random_state=42
-)
-X_train2, x_trainRemain, y_train2, y_trainRemain = train_test_split(
-    x_trainRemain, y_trainRemain, test_size=0.8, random_state=42
-)
-X_train3, x_trainRemain, y_train3, y_trainRemain =train_test_split(
-    x_trainRemain, y_trainRemain, test_size=0.75, random_state=42
-)
-X_train4, x_trainRemain, y_train4, y_trainRemain = train_test_split(
-    x_trainRemain, y_trainRemain, test_size=0.66666666, random_state=42
-)
-X_train5, X_train6, y_train5, y_train6 = train_test_split(
-    x_trainRemain, y_trainRemain,test_size=0.5, random_state=42
-)
-x = [X_train1, X_train2, X_train3, X_train4, X_train5, X_train6]
-y = [y_train1, y_train2, y_train3, y_train4, y_train5, y_train6]
-</code></pre>
+<span class="n">X_train1</span><span class="p">,</span><span class="w"> </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_train1</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_test_split</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.83333</span><span class="p">,</span><span class="w"> </span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">X_train2</span><span class="p">,</span><span class="w"> </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_train2</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_test_split</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span><span class="w"> </span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">X_train3</span><span class="p">,</span><span class="w"> </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_train3</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="w"> </span><span class="o">=</span><span class="n">train_test_split</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span><span class="w"> </span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">X_train4</span><span class="p">,</span><span class="w"> </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_train4</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_test_split</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.66666666</span><span class="p">,</span><span class="w"> </span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">X_train5</span><span class="p">,</span><span class="w"> </span><span class="n">X_train6</span><span class="p">,</span><span class="w"> </span><span class="n">y_train5</span><span class="p">,</span><span class="w"> </span><span class="n">y_train6</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">train_test_split</span><span class="p">(</span>
+<span class="w">    </span><span class="n">x_trainRemain</span><span class="p">,</span><span class="w"> </span><span class="n">y_trainRemain</span><span class="p">,</span><span class="n">test_size</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span>
+<span class="p">)</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">X_train1, X_train2, X_train3, X_train4, X_train5, X_train6</span><span class="o">]</span>
+<span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">y_train1, y_train2, y_train3, y_train4, y_train5, y_train6</span><span class="o">]</span>
+</code></pre></div>
 
 <p><strong>Vanila DeSGLD approximation</strong>  </p>
-<pre class="codehilite"><code>net=NetworkArchitecture(size_w)
+<div class="codehilite"><pre><span></span><code>net=NetworkArchitecture(size_w)
 wf=net.fully_connected()
 wc=net.circular_network()
 wd=net.fully_disconnected()
 
 nets=np.array([wf,wc,wd])
-</code></pre>
+</code></pre></div>
 
 <p>Run the Vanila DeSGLD algorithm for all three networks  </p>
-<pre class="codehilite"><code>three_net_combined=[]
-for i in tqdm(range(len(nets))):
-    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'logistic')
-    vdesgld,_=method.vanila_desgld()
-    three_net_combined.append(vdesgld)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">three_net_combined</span><span class="o">=</span><span class="err">[]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tqdm</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">)))</span><span class="err">:</span>
+<span class="w">    </span><span class="k">method</span><span class="o">=</span><span class="n">DeSGLD</span><span class="p">(</span><span class="n">size_w</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">eta</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">dim</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">lam</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">nets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">hv</span><span class="p">,</span><span class="s1">&#39;logistic&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">vdesgld</span><span class="p">,</span><span class="n">_</span><span class="o">=</span><span class="k">method</span><span class="p">.</span><span class="n">vanila_desgld</span><span class="p">()</span>
+<span class="w">    </span><span class="n">three_net_combined</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">vdesgld</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Compute the accuracy  </p>
-<pre class="codehilite"><code>desgld_acc=[]
+<div class="codehilite"><pre><span></span><code>desgld_acc=[]
 desgld_std=[]
 for desgld in tqdm(three_net_combined):
     desgld_accuracy=ClassificationAccuracy(x_all,y_all,desgld,T)
@@ -188,165 +188,165 @@ for desgld in tqdm(three_net_combined):
     desgld_std.append(d_std)
 desgld_acc=np.array(desgld_acc)
 desgld_std=np.array(desgld_std)
-</code></pre>
+</code></pre></div>
 
 <p>Next we plot the accuracy of the classification from the vanila DeSGLD</p>
-<pre class="codehilite"><code>fig, axs=plt.subplots(1, len(desgld_acc),figsize=(26.4,6.6))
-mpl.rcParams['font.size'] = 24
-index = list(range(T + 1))
-titles=[&quot;Fully Connected&quot;,&quot;Circular&quot;,&quot;Disconnected&quot;]
-for i, (d_acc, d_std, title) in enumerate(zip(desgld_acc, desgld_std, titles)):
-    axs[i].plot(d_acc, 'b-', linewidth=3)
-    axs[i].fill_between(index, d_acc + d_std, d_acc - d_std, alpha=0.5)
-    axs[i].set_title(title, fontsize=24)  
-    axs[i].legend(['Mean of accuracy', r'Accuracy $\pm$ Std'], loc='lower right', fontsize=24)
-    axs[i].set_xlabel(r'Iterations $k$', fontsize=20)  
-    axs[i].set_ylabel('Accuracy', fontsize=24)  
-    axs[i].set_ylim(0, 1)  
-    axs[i].tick_params(labelsize=24) 
-    axs[i].grid()
-plt.tight_layout()
-plt.show()
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nf">len</span><span class="p">(</span><span class="n">desgld_acc</span><span class="p">),</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="mf">6.6</span><span class="p">))</span>
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span>
+<span class="k">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="n">titles</span><span class="o">=[</span><span class="n">&quot;Fully Connected&quot;,&quot;Circular&quot;,&quot;Disconnected&quot;</span><span class="o">]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">d_acc</span><span class="p">,</span><span class="w"> </span><span class="n">d_std</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">zip</span><span class="p">(</span><span class="n">desgld_acc</span><span class="p">,</span><span class="w"> </span><span class="n">desgld_std</span><span class="p">,</span><span class="w"> </span><span class="n">titles</span><span class="p">))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">d_acc</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span><span class="k">index</span><span class="p">,</span><span class="w"> </span><span class="n">d_acc</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">d_std</span><span class="p">,</span><span class="w"> </span><span class="n">d_acc</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">d_std</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="o">[</span><span class="n">&#39;Mean of accuracy&#39;, r&#39;Accuracy $\pm$ Std&#39;</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p>The plot<br />
 <img alt="Figure 1" src="../plots/p1.png" />  </p>
 <p><strong>EXTRA-DeSGLD Approximation</strong>  </p>
-<pre class="codehilite"><code>three_net_combined=[]
-for i in tqdm(range(len(nets))):
-    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'logistic')
-    edesgld,_=method.extra_desgld()
-    three_net_combined.append(edesgld)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">three_net_combined</span><span class="o">=</span><span class="err">[]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tqdm</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">)))</span><span class="err">:</span>
+<span class="w">    </span><span class="k">method</span><span class="o">=</span><span class="n">DeSGLD</span><span class="p">(</span><span class="n">size_w</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">eta</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">dim</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">lam</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">nets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">hv</span><span class="p">,</span><span class="s1">&#39;logistic&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">edesgld</span><span class="p">,</span><span class="n">_</span><span class="o">=</span><span class="k">method</span><span class="p">.</span><span class="n">extra_desgld</span><span class="p">()</span>
+<span class="w">    </span><span class="n">three_net_combined</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">edesgld</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Accuracy Calculations  </p>
-<pre class="codehilite"><code>extradesgld_acc=[]
-extradesgld_std=[]
-for i in tqdm(range(len(nets))):
-    exacc=[]
-    exstd=[]
-    for j in range(len(hv)):
-        extradesgld_accuracy=ClassificationAccuracy(
-            x_all,y_all,three_net_combined[i][j],T
-        )
-        acc,std=extradesgld_accuracy.compute_accuracy()
-        exacc.append(acc)
-        exstd.append(std)
-    extradesgld_acc.append(exacc)
-    extradesgld_std.append(exstd)
+<div class="codehilite"><pre><span></span><code><span class="n">extradesgld_acc</span><span class="o">=</span><span class="err">[]</span>
+<span class="n">extradesgld_std</span><span class="o">=</span><span class="err">[]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tqdm</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">)))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">exacc</span><span class="o">=</span><span class="err">[]</span>
+<span class="w">    </span><span class="n">exstd</span><span class="o">=</span><span class="err">[]</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">hv</span><span class="p">))</span><span class="err">:</span>
+<span class="w">        </span><span class="n">extradesgld_accuracy</span><span class="o">=</span><span class="n">ClassificationAccuracy</span><span class="p">(</span>
+<span class="w">            </span><span class="n">x_all</span><span class="p">,</span><span class="n">y_all</span><span class="p">,</span><span class="n">three_net_combined</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">,</span><span class="n">T</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">        </span><span class="n">acc</span><span class="p">,</span><span class="n">std</span><span class="o">=</span><span class="n">extradesgld_accuracy</span><span class="p">.</span><span class="n">compute_accuracy</span><span class="p">()</span>
+<span class="w">        </span><span class="n">exacc</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">acc</span><span class="p">)</span>
+<span class="w">        </span><span class="n">exstd</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">std</span><span class="p">)</span>
+<span class="w">    </span><span class="n">extradesgld_acc</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">exacc</span><span class="p">)</span>
+<span class="w">    </span><span class="n">extradesgld_std</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">exstd</span><span class="p">)</span>
 
-extradesgld_acc=np.array(extradesgld_acc)
-extradesgld_std=np.array(extradesgld_std)
-</code></pre>
+<span class="n">extradesgld_acc</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">extradesgld_acc</span><span class="p">)</span>
+<span class="n">extradesgld_std</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">extradesgld_std</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Plot of the EXTRA DE-SGLD for each of the <code>h</code> values</p>
-<pre class="codehilite"><code>fig, axs=plt.subplots(1, 3,figsize=(26.4,8.6),sharex=True, sharey=True)
-mpl.rcParams['font.size'] = 24
-index = list(range(T + 1))
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="mf">8.6</span><span class="p">),</span><span class="n">sharex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="w"> </span><span class="n">sharey</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span>
+<span class="k">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
 
 
-titles=['Fully Connected','Circular','Disconnected']
+<span class="n">titles</span><span class="o">=[</span><span class="n">&#39;Fully Connected&#39;,&#39;Circular&#39;,&#39;Disconnected&#39;</span><span class="o">]</span>
 
-for j, title in enumerate(titles):
-    for i, h_value in enumerate(hv):
-        axs[j].plot(index,extradesgld_acc[j][i], label=f'h = {h_value:.3f}')
-    axs[j].set_title(title, fontsize=24)  
-    axs[j].legend(loc='lower right')
-    axs[j].set_xlabel(r'Iterations $k$', fontsize=20)  
-    axs[j].set_ylabel('Accuracy', fontsize=24)  
-    axs[j].set_ylim(0, 1)  
-    axs[j].tick_params(labelsize=24) 
-    axs[j].grid()
-plt.tight_layout()
-plt.show()
-</code></pre>
+<span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">h_value</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">hv</span><span class="p">)</span><span class="err">:</span>
+<span class="w">        </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="k">index</span><span class="p">,</span><span class="n">extradesgld_acc</span><span class="o">[</span><span class="n">j</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;h = {h_value:.3f}&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p><img alt="Figure 2" src="../plots/p2.png" />  </p>
 <p>Find the Maximum Accuracy for the optimal <code>h</code> values</p>
-<pre class="codehilite"><code>max_acc_arrays = []
-max_acc_indices = []
+<div class="codehilite"><pre><span></span><code><span class="n">max_acc_arrays</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
+<span class="n">max_acc_indices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="err">[]</span>
 
-for i in range(len(nets)):
-    max_acc_array = extradesgld_acc[i][np.argmax(np.max(extradesgld_acc[i], axis=1))]
-    max_acc_index = np.argmax(np.max(extradesgld_acc[i], axis=1))
-    max_acc_arrays.append(max_acc_array)
-    max_acc_indices.append(max_acc_index)
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">max_acc_array</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extradesgld_acc</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">np.argmax(np.max(extradesgld_acc[i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="err">]</span>
+<span class="w">    </span><span class="n">max_acc_index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">max</span><span class="p">(</span><span class="n">extradesgld_acc</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="n">max_acc_arrays</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_acc_array</span><span class="p">)</span>
+<span class="w">    </span><span class="n">max_acc_indices</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">max_acc_index</span><span class="p">)</span>
 
-max_acc_arrays = np.array(max_acc_arrays)
-max_acc_indices = np.array(max_acc_indices)
-max_hv_values = hv[max_acc_indices]
+<span class="n">max_acc_arrays</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">max_acc_arrays</span><span class="p">)</span>
+<span class="n">max_acc_indices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">max_acc_indices</span><span class="p">)</span>
+<span class="n">max_hv_values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">hv</span><span class="o">[</span><span class="n">max_acc_indices</span><span class="o">]</span>
 
-max_acc_stds=np.zeros((len(nets), (T+1)))
-for i in range(len(nets)):
-    max_acc_stds[i] = extradesgld_std[i, max_acc_indices[i]]
-</code></pre>
+<span class="n">max_acc_stds</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">zeros</span><span class="p">((</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="o">+</span><span class="mi">1</span><span class="p">)))</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">max_acc_stds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">extradesgld_std</span><span class="o">[</span><span class="n">i, max_acc_indices[i</span><span class="o">]</span><span class="err">]</span>
+</code></pre></div>
 
 <p>Next plot the maximum accuracy for the optimal <code>h</code>  </p>
-<pre class="codehilite"><code>fig, axs=plt.subplots(1, 3,figsize=(26.4,6.6),sharex=True, sharey=True)
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="mf">6.6</span><span class="p">),</span><span class="n">sharex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="w"> </span><span class="n">sharey</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
 
-mpl.rcParams['font.size'] = 24
-index = list(range(T + 1))
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span>
+<span class="k">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
 
 
-titles=['Fully Connected','Circular','Disconnected']
+<span class="n">titles</span><span class="o">=[</span><span class="n">&#39;Fully Connected&#39;,&#39;Circular&#39;,&#39;Disconnected&#39;</span><span class="o">]</span>
 
-for i,title in enumerate(titles):
-    axs[i].plot(max_acc_arrays[i],'r-', linewidth=3,label=f'h = {max_hv_values[i]:.3f}')
-    axs[i].fill_between(
-        index,max_acc_arrays[i]+max_acc_stds[i],max_acc_arrays[i]-max_acc_stds[i],alpha=0.25,color='red'
-    )
-    axs[i].set_title(title, fontsize=24)  
-    axs[i].legend(loc='lower right')
-    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)  
-    axs[i].set_ylabel('Accuracy', fontsize=24)  
-    axs[i].set_ylim(0, 1)  
-    axs[i].tick_params(labelsize=24) 
-    axs[i].grid()
-plt.tight_layout()
-plt.show()
-</code></pre>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">title</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_acc_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;h = {max_hv_values[i]:.3f}&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span>
+<span class="w">        </span><span class="k">index</span><span class="p">,</span><span class="n">max_acc_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]+</span><span class="n">max_acc_stds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">max_acc_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]-</span><span class="n">max_acc_stds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p><img alt="Figure 3" src="../plots/p3.png" />  </p>
 <p>Now we can compare the approximations from both of the 
 Vanila and Extra DeSGLD algorithms</p>
-<pre class="codehilite"><code>fig, axs = plt.subplots(1, 3, figsize=(26.4, 6.6), sharex=True, sharey=True)
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">axs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="w"> </span><span class="mf">6.6</span><span class="p">),</span><span class="w"> </span><span class="n">sharex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="w"> </span><span class="n">sharey</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
 
-mpl.rcParams['font.size'] = 24
-index = list(range(T + 1))
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span>
+<span class="k">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
 
-titles = ['Fully Connected', 'Circular', 'Disconnected']
+<span class="n">titles</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">[</span><span class="n">&#39;Fully Connected&#39;, &#39;Circular&#39;, &#39;Disconnected&#39;</span><span class="o">]</span>
 
-for i, title in enumerate(titles):
-    axs[i].plot(desgld_acc[i], 'b-', linewidth=3, label=f'Vanila DESGLD')
-    axs[i].fill_between(
-        index, desgld_acc[i] + desgld_std[i], desgld_acc[i] - desgld_std[i], alpha=0.25, color='blue'
-    )
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">desgld_acc</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;b-&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;Vanila DESGLD&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span>
+<span class="w">        </span><span class="k">index</span><span class="p">,</span><span class="w"> </span><span class="n">desgld_acc</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">desgld_std</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">desgld_acc</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">desgld_std</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span>
+<span class="w">    </span><span class="p">)</span>
 
-    axs[i].plot(max_acc_arrays[i], 'r-', linewidth=3, label=f'EXTRA DESGLD, h = {max_hv_values[i]:.3f}')
-    axs[i].fill_between(
-        index, max_acc_arrays[i] + max_acc_stds[i], max_acc_arrays[i] - max_acc_stds[i], alpha=0.25, color='red'
-    )
-    axs[i].set_title(title, fontsize=24)
-    axs[i].legend(loc='lower right')
-    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)
-    axs[i].set_ylabel('Accuracy', fontsize=24)
-    axs[i].set_ylim(0, 1)
-    axs[i].tick_params(labelsize=24)
-    axs[i].grid()
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">max_acc_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;r-&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;EXTRA DESGLD, h = {max_hv_values[i]:.3f}&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">fill_between</span><span class="p">(</span>
+<span class="w">        </span><span class="k">index</span><span class="p">,</span><span class="w"> </span><span class="n">max_acc_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">max_acc_stds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">max_acc_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">max_acc_stds</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;lower right&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
 
-plt.tight_layout()
-plt.show()
-</code></pre>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p><img alt="Figure 4" src="../plots/p4.png" />  </p>
 <h2 id="bayesian-linear-regression-with-synthetic-data">Bayesian Linear Regression with Synthetic Data</h2>
 <p><strong>Parameters</strong></p>
-<pre class="codehilite"><code>size_w=20; N=20; dim=2; sigma=np.eye(dim); sigma_sample=1; 
+<div class="codehilite"><pre><span></span><code>size_w=20; N=20; dim=2; sigma=np.eye(dim); sigma_sample=1; 
 eta=0.009 ; T=50; lam=10; b=50;  hv=np.linspace(0.001,0.5,5); 
-</code></pre>
+</code></pre></div>
 
 <p><strong>Data Generation</strong>  </p>
-<pre class="codehilite"><code>x=[]
+<div class="codehilite"><pre><span></span><code>x=[]
 
 for i in range(1000):
     x.append([np.random.random()*1])
@@ -366,160 +366,168 @@ cov_post=np.linalg.inv(np.linalg.inv(cov_pri)+np.dot(np.transpose(x_all),x_all)/
 
 x=np.split(x_all,100)
 y=np.split(y_all,100)
-</code></pre>
+</code></pre></div>
 
 <p><strong>Vanila DeSGLD Approximation</strong>  </p>
+<div class="codehilite"><pre><span></span><code>net=NetworkArchitecture(size_w)
+wf=net.fully_connected()
+wc=net.circular_network()
+wd=net.fully_disconnected()
+
+nets=np.array([wf,wc,wd])
+</code></pre></div>
+
 <p>Run the Vanila DeSGLD algorithm for all three networks  </p>
-<pre class="codehilite"><code>three_net_combined_agents=[]
-three_net_combined_magents=[]
-for i in tqdm(range(len(nets))):
-    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'linear')
-    desgld_agents,desgld_magents=method.vanila_desgld()
-    three_net_combined_agents.append(desgld_agents)
-    three_net_combined_magents.append(desgld_magents)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">three_net_combined_agents</span><span class="o">=</span><span class="err">[]</span>
+<span class="n">three_net_combined_magents</span><span class="o">=</span><span class="err">[]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tqdm</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">)))</span><span class="err">:</span>
+<span class="w">    </span><span class="k">method</span><span class="o">=</span><span class="n">DeSGLD</span><span class="p">(</span><span class="n">size_w</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">eta</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">dim</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">lam</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">nets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">hv</span><span class="p">,</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">desgld_agents</span><span class="p">,</span><span class="n">desgld_magents</span><span class="o">=</span><span class="k">method</span><span class="p">.</span><span class="n">vanila_desgld</span><span class="p">()</span>
+<span class="w">    </span><span class="n">three_net_combined_agents</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">desgld_agents</span><span class="p">)</span>
+<span class="w">    </span><span class="n">three_net_combined_magents</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">desgld_magents</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Compute the <code>w_2</code> distance  </p>
-<pre class="codehilite"><code>desgld_three_net_combined_dist=[]
+<div class="codehilite"><pre><span></span><code>desgld_three_net_combined_dist=[]
 for dis_agent,dis_magent in tqdm(zip(three_net_combined_agents,three_net_combined_magents)):
     distance=Wasserstein2Distance(size_w,T,avg_post,cov_post,dis_agent,dis_magent)
     dis=distance.W2_dist()
     desgld_three_net_combined_dist.append(dis)
-</code></pre>
+</code></pre></div>
 
 <p>Next plot the distances  </p>
-<pre class="codehilite"><code>fig, axs=plt.subplots(1, 3,figsize=(26.4,6.6))
-mpl.rcParams['font.size'] = 24
-index = list(range(T + 1))
-titles=[&quot;Fully Connected: DESGLD&quot;,&quot;Circular: DESGLD&quot;,&quot;Disconnected: DESGLD&quot;]
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="mf">6.6</span><span class="p">))</span>
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">24</span>
+<span class="k">index</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">list</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="n">T</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">))</span>
+<span class="n">titles</span><span class="o">=[</span><span class="n">&quot;Fully Connected: DESGLD&quot;,&quot;Circular: DESGLD&quot;,&quot;Disconnected: DESGLD&quot;</span><span class="o">]</span>
 
-for i in range(len(desgld_three_net_combined_dist)):
-    axs[i].plot(index,desgld_three_net_combined_dist[i][0],linewidth=3,label=r'Agent 1 $x_1^{(k)}$')
-    axs[i].plot(desgld_three_net_combined_dist[i][1],linewidth=3,label=r'Agent 2 $x_2^{(k)}$')
-    axs[i].plot(desgld_three_net_combined_dist[i][2],linewidth=3,label=r'Agent 3 $x_3^{(k)}$')
-    axs[i].plot(desgld_three_net_combined_dist[i][3],linewidth=3,label=r'Agent 4 $x_4^{(k)}$')
-    axs[i].plot(desgld_three_net_combined_dist[i][-1],linewidth=3,label=r'Mean of Agents $\bar{x}^{(k)}$')
-    axs[i].set_title(titles[i], fontsize=24)
-    axs[i].legend(loc='upper right', fontsize=17)
-    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)  
-    axs[i].set_ylabel(r'$\mathcal{W}_2$ Distance ', fontsize=24)    
-    axs[i].tick_params(labelsize=24) 
-    axs[i].grid()
-plt.tight_layout()
-plt.show()
-</code></pre>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">desgld_three_net_combined_dist</span><span class="p">))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="k">index</span><span class="p">,</span><span class="n">desgld_three_net_combined_dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">0</span><span class="o">]</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">r</span><span class="s1">&#39;Agent 1 $x_1^{(k)}$&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">desgld_three_net_combined_dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">1</span><span class="o">]</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">r</span><span class="s1">&#39;Agent 2 $x_2^{(k)}$&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">desgld_three_net_combined_dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">2</span><span class="o">]</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">r</span><span class="s1">&#39;Agent 3 $x_3^{(k)}$&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">desgld_three_net_combined_dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">3</span><span class="o">]</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">r</span><span class="s1">&#39;Agent 4 $x_4^{(k)}$&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">desgld_three_net_combined_dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">-1</span><span class="o">]</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">r</span><span class="s1">&#39;Mean of Agents $\bar{x}^{(k)}$&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">titles</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">  </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;$\mathcal{W}_2$ Distance &#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w">    </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span><span class="w"> </span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p>Here is the plot<br />
 <img alt="Figure 5" src="../plots/p5.png" />  </p>
 <p><strong>EXTRA DeSGLD Approximation</strong>  </p>
 <p>Run the EXTRA DeSGLD algorithm for all three networks</p>
-<pre class="codehilite"><code>three_net_combined_agents=[]
-three_net_combined_magents=[]
-for i in tqdm(range(len(nets))):
-    method=DeSGLD(size_w,N,sigma,eta,T,dim,b,lam,x,y,nets[i],hv,'linear')
-    edesgld_agents,edesgld_magents=method.extra_desgld()
-    three_net_combined_agents.append(edesgld_agents)
-    three_net_combined_magents.append(edesgld_magents)
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="n">three_net_combined_agents</span><span class="o">=</span><span class="err">[]</span>
+<span class="n">three_net_combined_magents</span><span class="o">=</span><span class="err">[]</span>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tqdm</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">)))</span><span class="err">:</span>
+<span class="w">    </span><span class="k">method</span><span class="o">=</span><span class="n">DeSGLD</span><span class="p">(</span><span class="n">size_w</span><span class="p">,</span><span class="n">N</span><span class="p">,</span><span class="n">sigma</span><span class="p">,</span><span class="n">eta</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">dim</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">lam</span><span class="p">,</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">nets</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">hv</span><span class="p">,</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">edesgld_agents</span><span class="p">,</span><span class="n">edesgld_magents</span><span class="o">=</span><span class="k">method</span><span class="p">.</span><span class="n">extra_desgld</span><span class="p">()</span>
+<span class="w">    </span><span class="n">three_net_combined_agents</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">edesgld_agents</span><span class="p">)</span>
+<span class="w">    </span><span class="n">three_net_combined_magents</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">edesgld_magents</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Compute the <code>w_2</code>  Distances  </p>
-<pre class="codehilite"><code>extradesgld_three_net_combined_dist=[]
+<div class="codehilite"><pre><span></span><code><span class="n">extradesgld_three_net_combined_dist</span><span class="o">=</span><span class="err">[]</span>
 
-for i in tqdm(range(len(nets))):
-    ex=[]
-    for j in range(len(hv)):
-        extradistance=Wasserstein2Distance(
-            size_w,T,avg_post,cov_post,
-            three_net_combined_agents[i][j],
-            three_net_combined_magents[i][j]
-        )
-        ex.append(extradistance.W2_dist())
-    extradesgld_three_net_combined_dist.append(ex)
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">tqdm</span><span class="p">(</span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">)))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">ex</span><span class="o">=</span><span class="err">[]</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">hv</span><span class="p">))</span><span class="err">:</span>
+<span class="w">        </span><span class="n">extradistance</span><span class="o">=</span><span class="n">Wasserstein2Distance</span><span class="p">(</span>
+<span class="w">            </span><span class="n">size_w</span><span class="p">,</span><span class="n">T</span><span class="p">,</span><span class="n">avg_post</span><span class="p">,</span><span class="n">cov_post</span><span class="p">,</span>
+<span class="w">            </span><span class="n">three_net_combined_agents</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span><span class="p">,</span>
+<span class="w">            </span><span class="n">three_net_combined_magents</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">j</span><span class="o">]</span>
+<span class="w">        </span><span class="p">)</span>
+<span class="w">        </span><span class="n">ex</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">extradistance</span><span class="p">.</span><span class="n">W2_dist</span><span class="p">())</span>
+<span class="w">    </span><span class="n">extradesgld_three_net_combined_dist</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">ex</span><span class="p">)</span>
 
-extradesgld_three_net_combined_dist=np.array(extradesgld_three_net_combined_dist)
-</code></pre>
+<span class="n">extradesgld_three_net_combined_dist</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">extradesgld_three_net_combined_dist</span><span class="p">)</span>
+</code></pre></div>
 
 <p>Work with the <code>w_2</code> distances of mean agents  </p>
-<pre class="codehilite"><code>mean_dist = np.empty((len(nets), len(hv), T+1))
+<div class="codehilite"><pre><span></span><code>mean_dist = np.empty((len(nets), len(hv), T+1))
 for i in tqdm(range(len(nets))):
     for j in range(len(hv)):
         mean_dist[i, j, :] = extradesgld_three_net_combined_dist[i, j, -1, :]
-</code></pre>
+</code></pre></div>
 
 <p>Plot the <code>w_2</code> distance of mean agents for each <code>h</code> values</p>
-<pre class="codehilite"><code>fig, axs=plt.subplots(1,3, figsize=(26.4,8.6), sharex=True, sharey=True)
-mpl.rcParams['font.size']=24
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="w"> </span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="mf">8.6</span><span class="p">),</span><span class="w"> </span><span class="n">sharex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="w"> </span><span class="n">sharey</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]=</span><span class="mi">24</span>
 
-titles=['Fully Connected','Circular', 'Disconnected']
+<span class="n">titles</span><span class="o">=[</span><span class="n">&#39;Fully Connected&#39;,&#39;Circular&#39;, &#39;Disconnected&#39;</span><span class="o">]</span>
 
-for j, title in enumerate(titles):
-    for i,h_value in enumerate(hv):
-        axs[j].plot(mean_dist[j][i],linewidth=3, label=f'h={h_value:.3f}')
-    axs[j].set_title(title, fontsize=24)
-    axs[j].set_xlabel(r'Iterations $k$', fontsize=24)
-    axs[j].set_ylabel(r'$\mathcal{W}_2$ Dist. of mean agents', fontsize=24)
-    axs[j].tick_params(labelsize=24)
-    axs[j].legend(loc='upper right')
-    axs[j].grid()
-plt.tight_layout()
-plt.show()
-</code></pre>
+<span class="k">for</span><span class="w"> </span><span class="n">j</span><span class="p">,</span><span class="w"> </span><span class="n">title</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">h_value</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">hv</span><span class="p">)</span><span class="err">:</span>
+<span class="w">        </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">mean_dist</span><span class="o">[</span><span class="n">j</span><span class="o">][</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;h={h_value:.3f}&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;$\mathcal{W}_2$ Dist. of mean agents&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">j</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p><img alt="Figure 6" src="../plots/p6.png" />  </p>
 <p>Find the minimum distance for optimal <code>h</code> values  </p>
-<pre class="codehilite"><code>min_dist_arrays=[]
-min_dist_indices=[]
+<div class="codehilite"><pre><span></span><code><span class="n">min_dist_arrays</span><span class="o">=</span><span class="err">[]</span>
+<span class="n">min_dist_indices</span><span class="o">=</span><span class="err">[]</span>
 
-for i in range(len(nets)):
-    min_dist_array=mean_dist[i][np.argmin(np.min(mean_dist[i],axis=1))]
-    min_dist_index=np.argmin(np.min(mean_dist[i],axis=1))
-    min_dist_arrays.append(min_dist_array)
-    min_dist_indices.append(min_dist_index)
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">range</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">nets</span><span class="p">))</span><span class="err">:</span>
+<span class="w">    </span><span class="n">min_dist_array</span><span class="o">=</span><span class="n">mean_dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">np.argmin(np.min(mean_dist[i</span><span class="o">]</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="err">]</span>
+<span class="w">    </span><span class="n">min_dist_index</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="nf">min</span><span class="p">(</span><span class="n">mean_dist</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="n">min_dist_arrays</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">min_dist_array</span><span class="p">)</span>
+<span class="w">    </span><span class="n">min_dist_indices</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">min_dist_index</span><span class="p">)</span>
 
-min_dist_arrays=np.array(min_dist_arrays)
-min_dist_indices=np.array(min_dist_indices)
-min_hv_values=hv[min_dist_indices]
-min_hv_values
-</code></pre>
+<span class="n">min_dist_arrays</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">min_dist_arrays</span><span class="p">)</span>
+<span class="n">min_dist_indices</span><span class="o">=</span><span class="n">np</span><span class="p">.</span><span class="k">array</span><span class="p">(</span><span class="n">min_dist_indices</span><span class="p">)</span>
+<span class="n">min_hv_values</span><span class="o">=</span><span class="n">hv</span><span class="o">[</span><span class="n">min_dist_indices</span><span class="o">]</span>
+<span class="n">min_hv_values</span>
+</code></pre></div>
 
 <p>Plot the <em>Optimal EXTRA DeSGLD Mean Distance</em> for the optimal <code>h</code> value  </p>
-<pre class="codehilite"><code>fig,axs=plt.subplots(1,3,figsize=(26.4,8.6),sharex=True, sharey=True)
-mpl.rcParams['font.size']=24
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="mf">8.6</span><span class="p">),</span><span class="n">sharex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="w"> </span><span class="n">sharey</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]=</span><span class="mi">24</span>
 
-titles=['Fully Connected','Circular', 'Disconnected']
+<span class="n">titles</span><span class="o">=[</span><span class="n">&#39;Fully Connected&#39;,&#39;Circular&#39;, &#39;Disconnected&#39;</span><span class="o">]</span>
 
-for i,title in enumerate(titles):
-    axs[i].plot(min_dist_arrays[i],'r-',linewidth=3,label=f'h={min_hv_values[i]:.3f}')
-    axs[i].set_title(title,fontsize=24)
-    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)
-    axs[i].set_ylabel(r'$\mathcal{W}_2$ Dist. of mean agents', fontsize=24)
-    axs[i].tick_params(labelsize=24)
-    axs[i].legend(loc='upper right')
-    axs[i].grid()
-plt.tight_layout()
-plt.show()
-</code></pre>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">title</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">min_dist_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;h={min_hv_values[i]:.3f}&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;$\mathcal{W}_2$ Dist. of mean agents&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p><img alt="Figure 7" src="../plots/p7.png" /> </p>
 <p>Finally, we can compare the performances from both of the
 algorithms  </p>
-<pre class="codehilite"><code>fig,axs=plt.subplots(1,3,figsize=(26.4,8.6),sharex=True, sharey=True)
-mpl.rcParams['font.size']=24
+<div class="codehilite"><pre><span></span><code><span class="n">fig</span><span class="p">,</span><span class="n">axs</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">26.4</span><span class="p">,</span><span class="mf">8.6</span><span class="p">),</span><span class="n">sharex</span><span class="o">=</span><span class="k">True</span><span class="p">,</span><span class="w"> </span><span class="n">sharey</span><span class="o">=</span><span class="k">True</span><span class="p">)</span>
+<span class="n">mpl</span><span class="p">.</span><span class="n">rcParams</span><span class="o">[</span><span class="n">&#39;font.size&#39;</span><span class="o">]=</span><span class="mi">24</span>
 
-titles=['Fully Connected','Circular', 'Disconnected']
+<span class="n">titles</span><span class="o">=[</span><span class="n">&#39;Fully Connected&#39;,&#39;Circular&#39;, &#39;Disconnected&#39;</span><span class="o">]</span>
 
-for i,title in enumerate(titles):
-    axs[i].plot(min_dist_arrays[i],'r-',linewidth=3,label=f'EXTRA DESGLD for h={min_hv_values[i]:.3f}')
-    axs[i].plot(desgld_three_net_combined_dist[i][-1],linewidth=3,label='Vanila DESGLD')
-    axs[i].set_title(title,fontsize=24)
-    axs[i].set_xlabel(r'Iterations $k$', fontsize=24)
-    axs[i].set_ylabel(r'$\mathcal{W}_2$ Dist. of mean agents', fontsize=24)
-    axs[i].tick_params(labelsize=24)
-    axs[i].legend(loc='upper right')
-    axs[i].grid()
-plt.tight_layout()
-plt.show()
-</code></pre>
+<span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="n">title</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">enumerate</span><span class="p">(</span><span class="n">titles</span><span class="p">)</span><span class="err">:</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">min_dist_arrays</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">,</span><span class="s1">&#39;r-&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">f</span><span class="s1">&#39;EXTRA DESGLD for h={min_hv_values[i]:.3f}&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">desgld_three_net_combined_dist</span><span class="o">[</span><span class="n">i</span><span class="o">][</span><span class="n">-1</span><span class="o">]</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Vanila DESGLD&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;Iterations $k$&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">r</span><span class="s1">&#39;$\mathcal{W}_2$ Dist. of mean agents&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">fontsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">labelsize</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">)</span>
+<span class="w">    </span><span class="n">axs</span><span class="o">[</span><span class="n">i</span><span class="o">]</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div>
 
 <p>And, here is the plot  </p>
 <p><img alt="Figure 8" src="../plots/p8.png" /></p>

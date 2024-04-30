@@ -194,59 +194,112 @@ regression we use the the Wasserstein2Distance class.
 </table>
             <details class="quote">
               <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
-              <pre class="codehilite"><code class="language-python">class ClassificationAccuracy:
-    """Calculate the classification accuracy in Bayesian Logistic Regression
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span>
+<span class="normal">13</span>
+<span class="normal">14</span>
+<span class="normal">15</span>
+<span class="normal">16</span>
+<span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span>
+<span class="normal">21</span>
+<span class="normal">22</span>
+<span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">ClassificationAccuracy</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculate the classification accuracy in Bayesian Logistic Regression</span>
 
-    Args:
-        x_all (list): the input data
-        y_all (list): the output data
-        history_all (list): contains the approximation from all the nodes
-        T (int): the number of iterations
-    """
+<span class="sd">    Args:</span>
+<span class="sd">        x_all (list): the input data</span>
+<span class="sd">        y_all (list): the output data</span>
+<span class="sd">        history_all (list): contains the approximation from all the nodes</span>
+<span class="sd">        T (int): the number of iterations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    def __init__(self, x_all, y_all, history_all, T):
-        self.x_all = x_all
-        self.y_all = y_all
-        self.history_all = history_all
-        self.T = T
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_all</span><span class="p">,</span> <span class="n">y_all</span><span class="p">,</span> <span class="n">history_all</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_all</span> <span class="o">=</span> <span class="n">x_all</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_all</span> <span class="o">=</span> <span class="n">y_all</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history_all</span> <span class="o">=</span> <span class="n">history_all</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
 
-    def compute_accuracy(self):
-        """Function that computes the classification accuracy
+    <span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Function that computes the classification accuracy</span>
 
-        Args:
-            params: the same parameters from the class
+<span class="sd">        Args:</span>
+<span class="sd">            params: the same parameters from the class</span>
 
-        Returns:
-        result_acc (float): the classification accuracy
-        result_std (float): the standard deviation of the classification
-        accuracy
-        """
-        mis_class = np.empty((self.T + 1, len(self.history_all[0, 0, 0])))
+<span class="sd">        Returns:</span>
+<span class="sd">        result_acc (float): the classification accuracy</span>
+<span class="sd">        result_std (float): the standard deviation of the classification</span>
+<span class="sd">        accuracy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">mis_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])))</span>
 
-        for t in range(self.T + 1):
-            for n in range(len(self.history_all[t, 0, 0])):
-                temp0 = 0
-                for i in range(len(self.x_all)):
-                    z = 1 / (
-                        1
-                        + np.exp(
-                            -np.dot(
-                                np.transpose(self.history_all[t, 1])[n],
-                                self.x_all[i],
-                            )
-                        )
-                    )
-                    if z &gt;= 0.5:
-                        z = 1
-                    else:
-                        z = 0
-                    if self.y_all[i] != z:
-                        temp0 += 1
-                mis_class[t, n] = 1 - temp0 / len(self.x_all)
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])):</span>
+                <span class="n">temp0</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_all</span><span class="p">)):</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span>
+                        <span class="mi">1</span>
+                        <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                            <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                                <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">])[</span><span class="n">n</span><span class="p">],</span>
+                                <span class="bp">self</span><span class="o">.</span><span class="n">x_all</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                            <span class="p">)</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">z</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+                        <span class="n">z</span> <span class="o">=</span> <span class="mi">1</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">z</span><span class="p">:</span>
+                        <span class="n">temp0</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">mis_class</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">temp0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_all</span><span class="p">)</span>
 
-        result_acc = np.mean(mis_class, axis=1)
-        result_std = np.std(mis_class, axis=1)
-        return result_acc, result_std</code></pre>
+        <span class="n">result_acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mis_class</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">result_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">mis_class</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result_acc</span><span class="p">,</span> <span class="n">result_std</span>
+</code></pre></div></td></tr></table></div>
             </details>
 
   
@@ -267,7 +320,7 @@ regression we use the the Wasserstein2Distance class.
 
 
 <h3 id="src.desgld.evaluation.ClassificationAccuracy.compute_accuracy" class="doc doc-heading">
-          <code class=" language-python">compute_accuracy()</code>
+          <code class=" language-python"><span class="n">compute_accuracy</span><span class="p">()</span></code>
 
 </h3>
 
@@ -305,43 +358,80 @@ accuracy</p>
 
           <details class="quote">
             <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
-            <pre class="codehilite"><code class="language-python">def compute_accuracy(self):
-    """Function that computes the classification accuracy
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
+<span class="normal">24</span>
+<span class="normal">25</span>
+<span class="normal">26</span>
+<span class="normal">27</span>
+<span class="normal">28</span>
+<span class="normal">29</span>
+<span class="normal">30</span>
+<span class="normal">31</span>
+<span class="normal">32</span>
+<span class="normal">33</span>
+<span class="normal">34</span>
+<span class="normal">35</span>
+<span class="normal">36</span>
+<span class="normal">37</span>
+<span class="normal">38</span>
+<span class="normal">39</span>
+<span class="normal">40</span>
+<span class="normal">41</span>
+<span class="normal">42</span>
+<span class="normal">43</span>
+<span class="normal">44</span>
+<span class="normal">45</span>
+<span class="normal">46</span>
+<span class="normal">47</span>
+<span class="normal">48</span>
+<span class="normal">49</span>
+<span class="normal">50</span>
+<span class="normal">51</span>
+<span class="normal">52</span>
+<span class="normal">53</span>
+<span class="normal">54</span>
+<span class="normal">55</span>
+<span class="normal">56</span>
+<span class="normal">57</span>
+<span class="normal">58</span>
+<span class="normal">59</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Function that computes the classification accuracy</span>
 
-    Args:
-        params: the same parameters from the class
+<span class="sd">    Args:</span>
+<span class="sd">        params: the same parameters from the class</span>
 
-    Returns:
-    result_acc (float): the classification accuracy
-    result_std (float): the standard deviation of the classification
-    accuracy
-    """
-    mis_class = np.empty((self.T + 1, len(self.history_all[0, 0, 0])))
+<span class="sd">    Returns:</span>
+<span class="sd">    result_acc (float): the classification accuracy</span>
+<span class="sd">    result_std (float): the standard deviation of the classification</span>
+<span class="sd">    accuracy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mis_class</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])))</span>
 
-    for t in range(self.T + 1):
-        for n in range(len(self.history_all[t, 0, 0])):
-            temp0 = 0
-            for i in range(len(self.x_all)):
-                z = 1 / (
-                    1
-                    + np.exp(
-                        -np.dot(
-                            np.transpose(self.history_all[t, 1])[n],
-                            self.x_all[i],
-                        )
-                    )
-                )
-                if z &gt;= 0.5:
-                    z = 1
-                else:
-                    z = 0
-                if self.y_all[i] != z:
-                    temp0 += 1
-            mis_class[t, n] = 1 - temp0 / len(self.x_all)
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])):</span>
+            <span class="n">temp0</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_all</span><span class="p">)):</span>
+                <span class="n">z</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span>
+                    <span class="mi">1</span>
+                    <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span>
+                        <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="mi">1</span><span class="p">])[</span><span class="n">n</span><span class="p">],</span>
+                            <span class="bp">self</span><span class="o">.</span><span class="n">x_all</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">z</span> <span class="o">&gt;=</span> <span class="mf">0.5</span><span class="p">:</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="mi">1</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_all</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">z</span><span class="p">:</span>
+                    <span class="n">temp0</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">mis_class</span><span class="p">[</span><span class="n">t</span><span class="p">,</span> <span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">temp0</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_all</span><span class="p">)</span>
 
-    result_acc = np.mean(mis_class, axis=1)
-    result_std = np.std(mis_class, axis=1)
-    return result_acc, result_std</code></pre>
+    <span class="n">result_acc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">mis_class</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">result_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">mis_class</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">result_acc</span><span class="p">,</span> <span class="n">result_std</span>
+</code></pre></div></td></tr></table></div>
           </details>
   </div>
 
@@ -439,105 +529,204 @@ accuracy</p>
 </table>
             <details class="quote">
               <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
-              <pre class="codehilite"><code class="language-python">class Wasserstein2Distance:
-    """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+              <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Wasserstein2Distance</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for: Wasserstein 2 distance in Bayesian Linear Regression</span>
 
-    Args:
-        size_w (int): the size of the network
-        T (int): the number of iterations
-        avg_post (list): the mean of the posterior distribution
-        cov_post (list): the covariance of the posterior distribution
-        history_all (list): contains the approximation from all the nodes
-        beta_mean_all (list): contains the mean of the approximation
-        from all the nodes
-    """
+<span class="sd">    Args:</span>
+<span class="sd">        size_w (int): the size of the network</span>
+<span class="sd">        T (int): the number of iterations</span>
+<span class="sd">        avg_post (list): the mean of the posterior distribution</span>
+<span class="sd">        cov_post (list): the covariance of the posterior distribution</span>
+<span class="sd">        history_all (list): contains the approximation from all the nodes</span>
+<span class="sd">        beta_mean_all (list): contains the mean of the approximation</span>
+<span class="sd">        from all the nodes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
-    def __init__(
-        self, size_w, T, avg_post, cov_post, history_all, beta_mean_all
-    ):
-        self.size_w = size_w
-        self.T = T
-        self.avg_post = avg_post
-        self.cov_post = cov_post
-        self.history_all = history_all
-        self.beta_mean_all = beta_mean_all
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">size_w</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">avg_post</span><span class="p">,</span> <span class="n">cov_post</span><span class="p">,</span> <span class="n">history_all</span><span class="p">,</span> <span class="n">beta_mean_all</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">size_w</span> <span class="o">=</span> <span class="n">size_w</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">=</span> <span class="n">avg_post</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span> <span class="o">=</span> <span class="n">cov_post</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">history_all</span> <span class="o">=</span> <span class="n">history_all</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">beta_mean_all</span> <span class="o">=</span> <span class="n">beta_mean_all</span>
 
-    def W2_dist(self):
-        """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+    <span class="k">def</span> <span class="nf">W2_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Class for: Wasserstein 2 distance in Bayesian Linear Regression</span>
 
-        Args:
-            size_w (int): the size of the network
-            T (int): the number of iterations
-            avg_post (list): the mean of the posterior distribution
-            cov_post (list): the covariance of the posterior distribution
-            history_all (list): contains the approximation from all the nodes
-            beta_mean_all (list): contains the mean of the approximation
-            from all the nodes
-        Returns:
-        w2dis (list): contains the W2 distance of each agent and
-        the mean of the approximation from all the ageents
-        """
-        w2dis = []
-        for i in range(self.size_w):
-            temp = []
-            w2dis.append(temp)
-        temp = []
-        w2dis.append(temp)
-        """
-        W2 distance of each agent
-        """
-        for i in range(self.size_w):
-            for t in range(self.T + 1):
-                d = 0
-                avg_temp = []
-                avg_temp.append(np.mean(self.history_all[t][i][0]))
-                avg_temp.append(np.mean(self.history_all[t][i][1]))
-                avg_temp = np.array(avg_temp)
-                cov_temp = np.cov(self.history_all[t][i])
-                d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
-                    self.avg_post - avg_temp
-                )
-                d = d + np.trace(
-                    self.cov_post
-                    + cov_temp
-                    - 2
-                    * sqrtm(
-                        np.dot(
-                            np.dot(sqrtm(cov_temp), self.cov_post),
-                            sqrtm(cov_temp),
-                        )
-                    )
-                )
-                w2dis[i].append(np.array(math.sqrt(abs(d))))
-        """
-        W2 distance of the mean of agents
-        """
-        for t in range(self.T + 1):
-            d = 0
-            avg_temp = []
-            avg_temp.append(np.mean(self.beta_mean_all[t][0]))
-            avg_temp.append(np.mean(self.beta_mean_all[t][1]))
-            avg_temp = np.array(avg_temp)
-            cov_temp = np.cov(self.beta_mean_all[t])
-            d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
-                self.avg_post - avg_temp
-            )
-            d = d + np.trace(
-                self.cov_post
-                + cov_temp
-                - 2
-                * sqrtm(
-                    np.dot(
-                        np.dot(sqrtm(cov_temp), self.cov_post), sqrtm(cov_temp)
-                    )
-                )
-            )
-            w2dis[self.size_w].append(np.array(math.sqrt(abs(d))))
+<span class="sd">        Args:</span>
+<span class="sd">            size_w (int): the size of the network</span>
+<span class="sd">            T (int): the number of iterations</span>
+<span class="sd">            avg_post (list): the mean of the posterior distribution</span>
+<span class="sd">            cov_post (list): the covariance of the posterior distribution</span>
+<span class="sd">            history_all (list): contains the approximation from all the nodes</span>
+<span class="sd">            beta_mean_all (list): contains the mean of the approximation</span>
+<span class="sd">            from all the nodes</span>
+<span class="sd">        Returns:</span>
+<span class="sd">        w2dis (list): contains the W2 distance of each agent and</span>
+<span class="sd">        the mean of the approximation from all the ageents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">w2dis</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_w</span><span class="p">):</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">w2dis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">w2dis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        W2 distance of each agent</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_w</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">avg_temp</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+                <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">avg_temp</span><span class="p">)</span>
+                <span class="n">cov_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span>
+                <span class="p">)</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span>
+                    <span class="o">+</span> <span class="n">cov_temp</span>
+                    <span class="o">-</span> <span class="mi">2</span>
+                    <span class="o">*</span> <span class="n">sqrtm</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                            <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span><span class="p">),</span>
+                            <span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">),</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="n">w2dis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d</span><span class="p">))))</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        W2 distance of the mean of agents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">avg_temp</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_mean_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_mean_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">avg_temp</span><span class="p">)</span>
+            <span class="n">cov_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_mean_all</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span>
+            <span class="p">)</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span>
+                <span class="o">+</span> <span class="n">cov_temp</span>
+                <span class="o">-</span> <span class="mi">2</span>
+                <span class="o">*</span> <span class="n">sqrtm</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span><span class="p">),</span> <span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">w2dis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">size_w</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d</span><span class="p">))))</span>
 
-        for i in range(len(w2dis)):
-            w2dis[i] = np.array(w2dis[i])
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">w2dis</span><span class="p">)):</span>
+            <span class="n">w2dis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">w2dis</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-        return w2dis</code></pre>
+        <span class="k">return</span> <span class="n">w2dis</span>
+</code></pre></div></td></tr></table></div>
             </details>
 
   
@@ -558,7 +747,7 @@ accuracy</p>
 
 
 <h3 id="src.desgld.evaluation.Wasserstein2Distance.W2_dist" class="doc doc-heading">
-          <code class=" language-python">W2_dist()</code>
+          <code class=" language-python"><span class="n">W2_dist</span><span class="p">()</span></code>
 
 </h3>
 
@@ -636,82 +825,158 @@ the mean of the approximation from all the ageents</p>
 
           <details class="quote">
             <summary>Source code in <code>src/desgld/evaluation.py</code></summary>
-            <pre class="codehilite"><code class="language-python">def W2_dist(self):
-    """Class for: Wasserstein 2 distance in Bayesian Linear Regression
+            <div class="codehilite"><table class="codehilitetable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">W2_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class for: Wasserstein 2 distance in Bayesian Linear Regression</span>
 
-    Args:
-        size_w (int): the size of the network
-        T (int): the number of iterations
-        avg_post (list): the mean of the posterior distribution
-        cov_post (list): the covariance of the posterior distribution
-        history_all (list): contains the approximation from all the nodes
-        beta_mean_all (list): contains the mean of the approximation
-        from all the nodes
-    Returns:
-    w2dis (list): contains the W2 distance of each agent and
-    the mean of the approximation from all the ageents
-    """
-    w2dis = []
-    for i in range(self.size_w):
-        temp = []
-        w2dis.append(temp)
-    temp = []
-    w2dis.append(temp)
-    """
-    W2 distance of each agent
-    """
-    for i in range(self.size_w):
-        for t in range(self.T + 1):
-            d = 0
-            avg_temp = []
-            avg_temp.append(np.mean(self.history_all[t][i][0]))
-            avg_temp.append(np.mean(self.history_all[t][i][1]))
-            avg_temp = np.array(avg_temp)
-            cov_temp = np.cov(self.history_all[t][i])
-            d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
-                self.avg_post - avg_temp
-            )
-            d = d + np.trace(
-                self.cov_post
-                + cov_temp
-                - 2
-                * sqrtm(
-                    np.dot(
-                        np.dot(sqrtm(cov_temp), self.cov_post),
-                        sqrtm(cov_temp),
-                    )
-                )
-            )
-            w2dis[i].append(np.array(math.sqrt(abs(d))))
-    """
-    W2 distance of the mean of agents
-    """
-    for t in range(self.T + 1):
-        d = 0
-        avg_temp = []
-        avg_temp.append(np.mean(self.beta_mean_all[t][0]))
-        avg_temp.append(np.mean(self.beta_mean_all[t][1]))
-        avg_temp = np.array(avg_temp)
-        cov_temp = np.cov(self.beta_mean_all[t])
-        d = np.linalg.norm(self.avg_post - avg_temp) * np.linalg.norm(
-            self.avg_post - avg_temp
-        )
-        d = d + np.trace(
-            self.cov_post
-            + cov_temp
-            - 2
-            * sqrtm(
-                np.dot(
-                    np.dot(sqrtm(cov_temp), self.cov_post), sqrtm(cov_temp)
-                )
-            )
-        )
-        w2dis[self.size_w].append(np.array(math.sqrt(abs(d))))
+<span class="sd">    Args:</span>
+<span class="sd">        size_w (int): the size of the network</span>
+<span class="sd">        T (int): the number of iterations</span>
+<span class="sd">        avg_post (list): the mean of the posterior distribution</span>
+<span class="sd">        cov_post (list): the covariance of the posterior distribution</span>
+<span class="sd">        history_all (list): contains the approximation from all the nodes</span>
+<span class="sd">        beta_mean_all (list): contains the mean of the approximation</span>
+<span class="sd">        from all the nodes</span>
+<span class="sd">    Returns:</span>
+<span class="sd">    w2dis (list): contains the W2 distance of each agent and</span>
+<span class="sd">    the mean of the approximation from all the ageents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">w2dis</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_w</span><span class="p">):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">w2dis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+    <span class="n">temp</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">w2dis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    W2 distance of each agent</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">size_w</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">avg_temp</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+            <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+            <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">avg_temp</span><span class="p">)</span>
+            <span class="n">cov_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">history_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span>
+            <span class="p">)</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span>
+                <span class="o">+</span> <span class="n">cov_temp</span>
+                <span class="o">-</span> <span class="mi">2</span>
+                <span class="o">*</span> <span class="n">sqrtm</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span><span class="p">),</span>
+                        <span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">),</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">w2dis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d</span><span class="p">))))</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    W2 distance of the mean of agents</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">avg_temp</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_mean_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">avg_temp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_mean_all</span><span class="p">[</span><span class="n">t</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="n">avg_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">avg_temp</span><span class="p">)</span>
+        <span class="n">cov_temp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">beta_mean_all</span><span class="p">[</span><span class="n">t</span><span class="p">])</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">avg_post</span> <span class="o">-</span> <span class="n">avg_temp</span>
+        <span class="p">)</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">d</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">trace</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span>
+            <span class="o">+</span> <span class="n">cov_temp</span>
+            <span class="o">-</span> <span class="mi">2</span>
+            <span class="o">*</span> <span class="n">sqrtm</span><span class="p">(</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_post</span><span class="p">),</span> <span class="n">sqrtm</span><span class="p">(</span><span class="n">cov_temp</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">w2dis</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">size_w</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">d</span><span class="p">))))</span>
 
-    for i in range(len(w2dis)):
-        w2dis[i] = np.array(w2dis[i])
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">w2dis</span><span class="p">)):</span>
+        <span class="n">w2dis</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">w2dis</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 
-    return w2dis</code></pre>
+    <span class="k">return</span> <span class="n">w2dis</span>
+</code></pre></div></td></tr></table></div>
           </details>
   </div>
 
