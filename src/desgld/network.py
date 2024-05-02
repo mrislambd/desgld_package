@@ -35,19 +35,6 @@ class NetworkArchitecture:
             reg_delta (float): regular delta
             min_delta (float): minimum delta for positive w
 
-        Code:
-        def fully_connected(self):
-            adj_mat=np.ones(self.size_w,self.size_w)-np.eye(self.size_w)
-            deg_mat=(self.size_w-1)*np.eye(self.size_w)
-            laplacian_matrix=deg_mat-adj_mat
-            eigenvalues = np.linalg.eigvals(laplacian_matrix)
-            max_eigenvalue = np.max(np.real(eigenvalues))
-            reg_delta = random.uniform(0, (2 / max_eigenvalue))
-            min_delta = np.min(laplacian_matrix) / np.max(deg_mat)
-            delta = max(reg_delta, min_delta)
-            w = np.eye(self.size_w) - delta * laplacian_matrix
-
-            return w
 
         Examples:
             >>> w=NetworkArchitecture(size_w=5)
@@ -97,26 +84,6 @@ class NetworkArchitecture:
         Returns:
             w (float): a circular network matrix
 
-        def circular_network(self):
-            adj_mat=np.zeros((self.size_w,self.size_w))
-            for i in range(self.size_w):
-                for j in range(self.size_w):
-                    if (i+1)==j:
-                        adj_mat[i,j]=1
-                    else:
-                        adj_mat[i,j]=adj_mat[i,j]
-            adj_mat[0,(self.size_w-1)]=1
-            adj_mat=adj_mat+np.transpose(adj_mat)
-            deg_mat=2*np.eye(self.size_w)
-            laplacian_matrix=deg_mat-adj_mat
-            eigenvalues=np.linalg.eigvals(laplacian_matrix)
-            max_eigenvalue = np.max(np.real(eigenvalues))
-            reg_delta = random.uniform(0, (2 / max_eigenvalue))
-            min_delta = np.min(laplacian_matrix) / np.max(deg_mat)
-            delta = max(reg_delta, min_delta)
-            w=np.eye(self.size_w)-delta*laplacian_matrix
-            return w
-
         Examples:
             >>> net = NetworkArchitecture(size_w=5)
             >>> w=net.circular_network()
@@ -164,7 +131,7 @@ class NetworkArchitecture:
             >>> net = NetworkArchitecture(size_w=6)
             >>> w=net.circular()
             >>> print(w)
-            w=[[1,0,0,0,0,0],
+                [[1,0,0,0,0,0],
                 [0,1,0,0,0,0],
                 [0,0,1,0,0,0],
                 [0,0,0,1,0,0],
@@ -199,27 +166,6 @@ class NetworkArchitecture:
 
         Returns:
             w (float): a star network matrix
-
-        Code:
-            def star_network(self):
-                adj_mat=np.zeros((self.size_w,self.size_w))
-                for i in range(self.size_w):
-                    for j in range(self.size_w):
-                        if i==0 or j==0:
-                            adj_mat[i,j]=1
-                            adj_mat[i,i]=0
-                        else:
-                            adj_mat[i,j]=adj_mat[i,j]
-                deg_mat=np.eye(self.size_w)
-                deg_mat[0,0]=(self.size_w-1)
-                laplacian_matrix=deg_mat-adj_mat
-                eigenvalues=np.linalg.eigvals(laplacian_matrix)
-                max_eigenvalue = np.max(np.real(eigenvalues))
-                reg_delta = random.uniform(0, (2 / max_eigenvalue))
-                min_delta = np.min(laplacian_matrix) / np.max(deg_mat)
-                delta = max(reg_delta, min_delta)
-                w=np.eye(self.size_w)-delta*laplacian_matrix
-            return w
 
         Examples:
             >>> net = NetworkArchitecture(size_w=5)
