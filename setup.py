@@ -15,7 +15,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="desgld",
-    version="0.1.1",
+    version="0.1.2",
     description="Package for decentralized stochastic gradient descent",
     url="https://github.com/mrislambd/desgld_package.git",
     author="Rafiq Islam",
