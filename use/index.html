@@ -163,7 +163,7 @@ following command either in terminal or command line
 </code></pre></div>
 
 <p><strong>Vanila DeSGLD approximation</strong>  </p>
-<div class="codehilite"><pre><span></span><code>net=NetworkArchitecture(size_w)
+<div class="codehilite"><pre><span></span><code>net=NetworkArchitecture(size_w,random_seed=42)
 wf=net.fully_connected()
 wc=net.circular_network()
 wd=net.fully_disconnected()
@@ -370,7 +370,7 @@ y=np.split(y_all,100)
 </code></pre></div>
 
 <p><strong>Vanila DeSGLD Approximation</strong>  </p>
-<div class="codehilite"><pre><span></span><code>net=NetworkArchitecture(size_w)
+<div class="codehilite"><pre><span></span><code>net=NetworkArchitecture(size_w,random_seed=42)
 wf=net.fully_connected()
 wc=net.circular_network()
 wd=net.fully_disconnected()
