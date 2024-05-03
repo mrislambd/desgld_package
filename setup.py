@@ -17,6 +17,8 @@ setup(
     name="desgld",
     version="0.1.2",
     description="Package for decentralized stochastic gradient descent",
+    long_description=long_description,
+    long_description_content_type="test/markdown",
     url="https://github.com/mrislambd/desgld_package.git",
     author="Rafiq Islam",
     packages=["desgld"],
