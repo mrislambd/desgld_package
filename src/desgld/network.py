@@ -39,8 +39,7 @@ class NetworkArchitecture:
             laplacian_matrix(np.ndarray): graph Laplacian matrix
             eigenvalues (np.ndarray): eigenvalues of the graph Laplacian
             max_eigenvalue (float): maximum eigenvalue of the graph Laplacian
-            reg_delta (float): regular delta
-            min_delta (float): minimum delta for positive w
+            delta (float): delta of the graph Laplacian
 
 
         Examples:
@@ -64,10 +63,11 @@ class NetworkArchitecture:
         laplacian_matrix = deg_mat - adj_mat
         eigenvalues = np.linalg.eigvals(laplacian_matrix)
         max_eigenvalue = np.max(np.real(eigenvalues))
-        reg_delta = random.uniform(0, (2 / max_eigenvalue))
-        min_delta = np.min(laplacian_matrix) / np.max(deg_mat)
-        delta = max(reg_delta, min_delta)
+        delta = random.uniform(0, (2 / max_eigenvalue))
         w = np.eye(self.size_w) - delta * laplacian_matrix
+        w = np.abs(w)
+        row_sums = np.sum(w, axis=1)
+        w = w / row_sums[:, np.newaxis]
 
         return w
 
@@ -84,8 +84,7 @@ class NetworkArchitecture:
             laplacian_matrix(np.ndarray): graph Laplacian matrix
             eigenvalues (np.ndarray): eigenvalues of the graph Laplacian
             max_eigenvalue (float): maximum eigenvalue of the graph Laplacian
-            reg_delta (float): regular delta
-            min_delta (float): minimum delta for positive w
+            delta (float): delta of the graph Laplacian
 
 
         Returns:
@@ -118,10 +117,12 @@ class NetworkArchitecture:
         laplacian_matrix = deg_mat - adj_mat
         eigenvalues = np.linalg.eigvals(laplacian_matrix)
         max_eigenvalue = np.max(np.real(eigenvalues))
-        reg_delta = random.uniform(0, (2 / max_eigenvalue))
-        min_delta = np.min(laplacian_matrix) / np.max(deg_mat)
-        delta = max(reg_delta, min_delta)
+        delta = random.uniform(0, (2 / max_eigenvalue))
         w = np.eye(self.size_w) - delta * laplacian_matrix
+        w = np.abs(w)
+        row_sums = np.sum(w, axis=1)
+        w = w / row_sums[:, np.newaxis]
+
         return w
 
     def fully_disconnected(self):
@@ -168,8 +169,7 @@ class NetworkArchitecture:
             laplacian_matrix(np.ndarray): graph Laplacian matrix
             eigenvalues (np.ndarray): eigenvalues of the graph Laplacian
             max_eigenvalue (float): maximum eigenvalue of the graph Laplacian
-            reg_delta (float): regular delta
-            min_delta (float): minimum delta for positive w
+            delta (float): delta of the graph Laplacian
 
         Returns:
             w (float): a star network matrix
@@ -201,8 +201,10 @@ class NetworkArchitecture:
         laplacian_matrix = deg_mat - adj_mat
         eigenvalues = np.linalg.eigvals(laplacian_matrix)
         max_eigenvalue = np.max(np.real(eigenvalues))
-        reg_delta = random.uniform(0, (2 / max_eigenvalue))
-        min_delta = np.min(laplacian_matrix) / np.max(deg_mat)
-        delta = max(reg_delta, min_delta)
+        delta = random.uniform(0, (2 / max_eigenvalue))
         w = np.eye(self.size_w) - delta * laplacian_matrix
+        w = np.abs(w)
+        row_sums = np.sum(w, axis=1)
+        w = w / row_sums[:, np.newaxis]
+
         return w
