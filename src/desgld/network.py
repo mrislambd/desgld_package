@@ -12,12 +12,19 @@ class NetworkArchitecture:
         fully connected, fully disconnected, circular network and star network.
     Args:
         size_w (int): the size of the network
+        random_seed (int or None): random seed for reproducibility
     Returns:
         Different network architectures
     """
 
-    def __init__(self, size_w):
+    def __init__(self, size_w, random_seed=None):
         self.size_w = size_w
+        self.random_seed = random_seed
+        self.set_seed()
+
+    def set_seed(self):
+        if self.random_seed is not None:
+            np.random.seed(self.random_seed)
 
     def fully_connected(self):
         """Fully Connected Network
@@ -37,7 +44,7 @@ class NetworkArchitecture:
 
 
         Examples:
-            >>> w=NetworkArchitecture(size_w=5)
+            >>> w=NetworkArchitecture(size_w=5,random_seed=42)
             >>> w=w.fully_connected()
             >>> print(w)
                 [[0.67811004 0.08047249 0.08047249 0.08047249 0.08047249]
@@ -85,7 +92,7 @@ class NetworkArchitecture:
             w (float): a circular network matrix
 
         Examples:
-            >>> net = NetworkArchitecture(size_w=5)
+            >>> w=NetworkArchitecture(size_w=5,random_seed=42)
             >>> w=net.circular_network()
             >>> print(w)
                 [[0.72162653 0.13918674 0.         0.         0.13918674]
@@ -168,7 +175,7 @@ class NetworkArchitecture:
             w (float): a star network matrix
 
         Examples:
-            >>> net = NetworkArchitecture(size_w=5)
+            >>> w=NetworkArchitecture(size_w=5,random_seed=42)
             >>> w=net.star_network()
             >>> print(w)
                 [[0.71180893 0.07204777 0.07204777 0.07204777 0.07204777]
