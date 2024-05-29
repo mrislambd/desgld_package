@@ -1,13 +1,6 @@
 import random
 
-try:
-    import cupy as np
-
-    use_gpu = True
-except ImportError:
-    import numpy as np
-
-    use_gpu = False
+import numpy as np
 
 
 class NetworkArchitecture:

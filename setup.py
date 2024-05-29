@@ -8,7 +8,6 @@ requirements = [
     "tqdm",
 ]
 
-requirements_gpu = ["cupy-cuda112"]
 
 requirements_dev = ["black", "isort", "flake8", "pre-commit"]
 
@@ -17,7 +16,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="desgld",
-    version="0.1.5",
+    version="0.1.6",
     description="Decentralized stochastic gradient Langevin diffusion",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -28,6 +27,5 @@ setup(
     install_requires=requirements,
     extras_require={
         "dev": requirements_dev,
-        "gpu": requirements_gpu,
     },
 )
