@@ -8,6 +8,8 @@ requirements = [
     "tqdm",
 ]
 
+requirements_gpu = ["cupy-cuda112"]
+
 requirements_dev = ["black", "isort", "flake8", "pre-commit"]
 
 with open("README.md", "r", encoding="utf-8") as fh:
@@ -15,8 +17,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="desgld",
-    version="0.1.4",
-    description="Package for decentralized stochastic gradient descent",
+    version="0.1.5",
+    description="Decentralized stochastic gradient Langevin diffusion",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/mrislambd/desgld_package.git",
@@ -24,5 +26,8 @@ setup(
     packages=["desgld"],
     package_dir={"": "src"},
     install_requires=requirements,
-    extras_require={"dev": requirements_dev},
+    extras_require={
+        "dev": requirements_dev,
+        "gpu": requirements_gpu,
+    },
 )
