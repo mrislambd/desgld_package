@@ -1,6 +1,14 @@
 import math
 
-import numpy as np
+try:
+    import cupy as np
+
+    use_gpu = True
+except ImportError:
+    import numpy as np
+
+    use_gpu = False
+
 from scipy.linalg import sqrtm
 
 

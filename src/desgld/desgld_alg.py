@@ -1,6 +1,13 @@
 import math
 
-import numpy as np
+try:
+    import cupy as np
+
+    use_gpu = True
+except ImportError:
+    import numpy as np
+
+    use_gpu = False
 
 
 class DeSGLD:
@@ -57,7 +64,7 @@ class DeSGLD:
             gradient for the the logistic regression
         """
         f = np.zeros(dim)
-        randomList = np.random.randint(0, len(y) - 1, size=int(b))
+        randomList = np.random.randint(0, len(y), size=int(b))
         for item in randomList:
             h = 1 / (1 + np.exp(-np.dot(beta, x[item])))
             f -= np.dot((y[item] - h), x[item])
@@ -75,10 +82,10 @@ class DeSGLD:
             lam: the regularization parameter
             b: the batch size
         Returns:
-            gradient for the the logistic regression
+            gradient for the the linear regression
         """
         f = np.zeros(dim)
-        randomList = np.random.randint(0, len(y) - 1, size=int(b))
+        randomList = np.random.randint(0, len(y), size=int(b))
         for i in randomList:
             f = f - np.dot((y[i] - np.dot(beta, x[i])), x[i])
         f += (2 / lam) * beta
@@ -131,7 +138,7 @@ class DeSGLD:
                         )
                         temp = np.zeros(self.dim)
                         for j in range(len(beta[n])):
-                            temp = temp + self.w[i, j] * beta[n, j]
+                            temp += self.w[i, j] * beta[n, j]
                         noise = np.random.normal(0, self.sigma, self.dim)
                         beta[n, i] = (
                             temp - step * g + math.sqrt(2 * step) * noise
@@ -147,7 +154,7 @@ class DeSGLD:
                         )
                         temp = np.zeros(self.dim)
                         for j in range(len(beta[n])):
-                            temp = temp + self.w[i, j] * beta[n, j]
+                            temp += self.w[i, j] * beta[n, j]
                         noise = np.random.multivariate_normal(
                             mean=np.zeros(self.dim), cov=np.eye(self.dim)
                         )
@@ -223,7 +230,7 @@ class DeSGLD:
                             )
                             temp = np.zeros(self.dim)
                             for j in range(len(beta[n])):
-                                temp = temp + w1[i, j] * beta[n, j]
+                                temp += w1[i, j] * beta[n, j]
                             noise = np.random.normal(0, self.sigma, self.dim)
                             beta[n, i] = (
                                 temp - step * g + math.sqrt(2 * step) * noise
@@ -239,7 +246,7 @@ class DeSGLD:
                             )
                             temp = np.zeros(self.dim)
                             for j in range(len(beta[n])):
-                                temp = temp + self.w[i, j] * beta[n, j]
+                                temp += self.w[i, j] * beta[n, j]
                             noise = np.random.normal(0, self.sigma, self.dim)
                             beta[n, i] = (
                                 temp - step * g + math.sqrt(2 * step) * noise
@@ -256,7 +263,7 @@ class DeSGLD:
                             )
                             temp = np.zeros(self.dim)
                             for j in range(len(beta[n])):
-                                temp = temp + w1[i, j] * beta[n, j]
+                                temp += w1[i, j] * beta[n, j]
                             noise = np.random.multivariate_normal(
                                 mean=np.zeros(self.dim), cov=np.eye(self.dim)
                             )
@@ -274,7 +281,7 @@ class DeSGLD:
                             )
                             temp = np.zeros(self.dim)
                             for j in range(len(beta[n])):
-                                temp = temp + self.w[i, j] * beta[n, j]
+                                temp += self.w[i, j] * beta[n, j]
                             noise = np.random.multivariate_normal(
                                 mean=np.zeros(self.dim), cov=np.eye(self.dim)
                             )
