@@ -4,3 +4,7 @@ __pycache__
 build
 *.swp
 *egg*
+dist/
+docs/
+site/
+mkdocs.yml
